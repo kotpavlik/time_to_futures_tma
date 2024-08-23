@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "description": "",
     "main": "index.js",
-    "homepage": "",
+    "homepage": "https://kotpavlik.github.io/time_to_futures_tma",
     "scripts": {
         "deploy": "gh-pages -d dist",
         "predeploy": "yarn run build",
