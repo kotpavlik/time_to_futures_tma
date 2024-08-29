@@ -5,26 +5,40 @@ import { THEME } from '@tonconnect/ui';
 
 
 export const TonConnectButton: Component = () => {
+
     const [, { setUIOptions }] = useTonConnectUI();
     const buttonRootId = 'ton-connect-button';
+
 
     onMount(() => {
         setUIOptions({
             buttonRootId,
+            actionsConfiguration: { twaReturnUrl: "https://google.com", notifications: "all" },
             uiPreferences: {
-                theme: THEME.DARK,
+                theme: "SYSTEM",
+                borderRadius: 'm',
                 colorsSet: {
-                    LIGHT: { background: { tint: "black" } },
-                    DARK: { background: { tint: "white" } }
+                    [THEME.DARK]: {
+                        connectButton: { background: "#3c4a49", foreground: "#00ff00" },
+                        text: { primary: "#3c4a49" }
+                    },
+                    [THEME.LIGHT]: {
+                        connectButton: { background: "#3c4a49", foreground: "#00ff00" },
+                        text: { primary: "#3c4a49" }
+                    },
+
+
                 }
-            }
+            },
         });
     });
+
+
 
     onCleanup(() => {
         setUIOptions({ buttonRootId: null });
     });
 
-    return <div id={buttonRootId} style={{ width: 'fit-content' }} />;
+    return <div id={buttonRootId} />;
 };
 
