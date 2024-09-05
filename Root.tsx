@@ -1,7 +1,7 @@
 import { retrieveLaunchParams, SDKProvider } from '@telegram-apps/sdk-solid';
 import { ErrorBoundary, type Component, Switch, Match } from 'solid-js';
-import { TonConnectUIProvider } from './ton_connect/TonConnectUIProvider';
-import App from './App';
+import { TonConnectUIProvider } from './src/ton_connect/TonConnectUIProvider';
+import App from './src/App';
 
 
 const Inner: Component = () => {

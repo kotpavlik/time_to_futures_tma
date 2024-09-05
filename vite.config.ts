@@ -12,6 +12,9 @@ export default defineConfig({
     // devtools(),
     solidPlugin(), basicSsl()
   ],
+  optimizeDeps: {
+    exclude: ['react', 'react-dom'],
+  },
   build: {
     target: 'esnext',
     outDir: './dist'

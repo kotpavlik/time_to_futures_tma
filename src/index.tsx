@@ -1,7 +1,7 @@
 
 import { render } from 'solid-js/web';
 import './index.css';
-import { Root } from './Root';
+import { Root } from '../Root';
 
 
 
