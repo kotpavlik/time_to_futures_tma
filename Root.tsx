@@ -8,7 +8,7 @@ const Inner: Component = () => {
     const debug = retrieveLaunchParams().startParam === 'debug';
     if (debug) {
         const newLocal = 'eruda';
-        import(newLocal).then((lib) => lib.default.init());
+        import( /* @vite-ignore */ newLocal).then((lib) => lib.default.init());
     }
 
     return (

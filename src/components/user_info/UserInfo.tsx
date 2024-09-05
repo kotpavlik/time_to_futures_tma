@@ -24,7 +24,6 @@ export const UserInfo = () => {
         }
     })
 
-    console.log(user())
 
     return (
         <div class='text-lg w-full relative  text-cente flex justify-between items-center p-4'>
@@ -39,7 +38,7 @@ export const UserInfo = () => {
                 shadow 
                 active:shadow-lg 
                 duration-500 
-                ${initData && initData.user && initData.user.isPremium && 'shadow-[#00ff00] active:shadow-[#00ff00]'}
+                ${user() && user().isPremium && 'shadow-[#00ff00] active:shadow-[#00ff00]'}
                 bg-[#121214] 
                 w-auto
                 px-4 
@@ -47,7 +46,7 @@ export const UserInfo = () => {
                 group`}>
 
                 <div class='flex '>
-                    <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : '../../../public/AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
+                    <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
                     <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
                         {user() && user().firstName && user().lastName
                             ? `${user().firstName} ${user().lastName}`

@@ -19,5 +19,5 @@ export default defineConfig({
     target: 'esnext',
     outDir: './dist'
   },
-  base: './pinkpunk_tma'
+  base: './'
 });
