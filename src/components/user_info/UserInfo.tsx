@@ -24,7 +24,7 @@ export const UserInfo = () => {
         }
     })
 
-    alert(JSON.stringify(user()))
+
     return (
         <div class='text-lg w-full relative  text-cente flex justify-between items-center p-4'>
             <div class={`
