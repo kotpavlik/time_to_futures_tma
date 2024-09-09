@@ -16,6 +16,9 @@ module.exports = {
             '2xl': '0 25px 50px rgba(0, 0, 0, 0.25)',
             'none': 'none',
         },
+        boxShadow: {
+            'progress_bar_shadow': 'inset 0 1px 2px rgba(0, 0, 0, 0.25),0 1 px rgba(255, 255, 255, 0.08)'
+        },
         screens: {
             'sm': '576px',
             // => @media (min-width: 576px) { ... }

@@ -25,6 +25,8 @@ export const UserInfo = () => {
     })
 
 
+
+
     return (
         <div class='text-lg w-full relative  text-cente flex justify-between items-center p-4'>
             <div class={`
@@ -108,6 +110,15 @@ export const UserInfo = () => {
                 font-bold 
                 group`}>
                 $TTF: {user().TTFUserCoins}
+            </div>
+            <div class=" text-center w-[600px] absolute
+                bottom-[-80px]
+                right-[50%]">
+                <div class="p-6 rounded-[30px] bg-[rgba(0, 0, 0, 0.25)] 
+                shadow shadow-progress_bar_shadow">
+                    <div class="progress-bar2">
+                    </div>
+                </div>
             </div>
 
         </div>
