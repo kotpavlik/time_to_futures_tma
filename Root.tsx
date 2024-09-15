@@ -13,7 +13,7 @@ const Inner: Component = () => {
 
     return (
         <TonConnectUIProvider
-            manifestUrl={new URL('./tonconnect-manifest.json', window.location.href).toString()}
+            manifestUrl={new URL('https://kotpavlik.github.io/pinkpunk_tma/tonconnect-manifest.json', window.location.href).toString()}
         >
             <SDKProvider acceptCustomStyles={true} debug={debug}>
                 <App />

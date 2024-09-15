@@ -1,10 +1,9 @@
 import { createWithSignal } from 'solid-zustand'
-
 import { UserApi } from "../../api/user_api/UserApi";
-import { useAppStore } from "../app_store/AppStore";
 import { HandleError } from "../../features/handleError";
 import { AxiosError } from "axios";
 import { immer } from 'zustand/middleware/immer';
+import { useAppStore } from '../app_store/AppStore';
 
 
 export type UserType = {
@@ -24,7 +23,6 @@ export type UserType = {
 }
 export type UserStateType = {
     user: UserType
-    setInitialUser: (User: UserType) => void
     initialUser: (User: UserType) => void
 }
 
@@ -46,25 +44,21 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         wallet_addres: '',
         my_referer: null,
     },
-    setInitialUser: (user: UserType) => set(state => {
-        state.user = user;
-
-    }),
     initialUser: async (User: UserType) => {
+        const { setStatus, setError } = useAppStore.getState()
         try {
-            const appStore = useAppStore();
-            appStore().setStatus('loading');
+            setStatus("loading")
             const UserRequest = await UserApi.InitialUser(User)
-            console.log(UserRequest)
-            get().setInitialUser(UserRequest.data);
-            appStore().setStatus("succeeded")
+            set(state => { state.user = UserRequest.data })
+            setStatus("success")
         } catch (error) {
-            const appStore = useAppStore();
             const err = error as Error | AxiosError
             HandleError(err)
-            appStore().setStatus("failed")
+            setStatus("failed")
         }
 
-    }
+    },
+    changePointsAndLVL: async (points: number) => {
 
+    }
 })))

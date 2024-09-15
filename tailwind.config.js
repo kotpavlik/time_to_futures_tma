@@ -16,9 +16,6 @@ module.exports = {
             '2xl': '0 25px 50px rgba(0, 0, 0, 0.25)',
             'none': 'none',
         },
-        boxShadow: {
-            'progress_bar_shadow': 'inset 0 1px 2px rgba(0, 0, 0, 0.25),0 1 px rgba(255, 255, 255, 0.08)'
-        },
         screens: {
             'sm': '576px',
             // => @media (min-width: 576px) { ... }
@@ -37,55 +34,42 @@ module.exports = {
             title: ['Murecho']
         },
         keyframes: {
-            leftIn: {
-                '0% ': {
-                    transform: 'translateX(-150%)',
+            progressAnimationStrike: {
+                '0%': {
+                    width: '0'
                 },
-                ' 100%': {
-                    transform: 'translateY(0)',
-                },
-            },
-            leftOut: {
-                '0% ': {
-                    opacity: '1',
-                },
-                '99%': {
-                    opacity: '0',
-                    height: '100vw',
-                    width: '100vh'
-                },
-                ' 100%': {
-                    opacity: '0',
-                    height: '100vw',
-                    width: '100vh'
+                '100%': {
+                    width: '100%'
                 },
             },
-            none: {
-                ' 100%': {
-                    transform: 'translateY(0)'
-                }
-            }
+            progressAnimation: {
+                '0%': {
+                    width: '0%',
+                    backgroundColor: '#b3ffb3',
+                },
+                '100%': {
+                    width: '85%',
+                    backgroundColor: '#00ff00',
+                },
+            },
         },
         animation: {
-            leftIn: 'leftIn 1s',
-            leftOut: 'leftOut 1s forwards',
-            none: 'none 0s'
+            progressAnimationStrike: 'progressAnimationStrike 6s',
+            progressAnimation: 'progressAnimation 6s',
+            colorAnimation: 'colorAnimation 1s infinite',
         },
         extend: {
             colors: {
-                'olive': '#DEE8E1',
-                'violet': '#CAD6F0',
-                'bege': '#F0EECA',
-                'hum-bege': '#E8CEC6',
-                'light-gray': '#E6E4EA',
-                'blue': '#007AFF',
-                'dark-gray': '#4E4E53',
-                'over-gray': '#232326',
-                'red': '#D62D30',
-                'blood-red': '#FF3B30',
-                'white': '#ffffff',
-                'bereza': '#13E3FE',
-                'link-blue': '#1A67FB ',
+                'first': '#353535',
+                'second': '#3c6e71',
+                'third': '#d9d9d9',
+                'fourth': '#284b63',
+                'green': '#355070',
+                'turquoise': '#6d597a',
+                'blue': '#b56576',
+                'light-blue': '#e56b6f',
+                'purple': '#eaac8b',
+                'red': '#ff2d55',
                 'transparent': 'transparent !important'
             },
             backgroundImage: {
@@ -93,7 +77,7 @@ module.exports = {
                 'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
             boxShadow: {
-                'items-shadow': '0px 0px 0px 0px rgba(87, 87, 76, 0.06), 8px 11px 30px 0px rgba(87, 87, 76, 0.06), 33px 42px 54px 0px rgba(87, 87, 76, 0.05), 75px 95px 73px 0px rgba(87, 87, 76, 0.03), 133px 169px 86px 0px rgba(87, 87, 76, 0.01), 207px 264px 94px 0px rgba(87, 87, 76, 0.00)'
+                'items-shadow': '0px 0px 0px 0px rgba(87, 87, 76, 0.06), 8px 11px 30px 0px rgba(87, 87, 76, 0.06), 33px 42px 54px 0px rgba(87, 87, 76, 0.05), 75px 95px 73px 0px rgba(87, 87, 76, 0.03), 133px 169px 86px 0px rgba(87, 87, 76, 0.01), 207px 264px 94px 0px rgba(81, 87, 76, 0.00)'
             }
         },
     },

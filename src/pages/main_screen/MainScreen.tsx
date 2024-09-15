@@ -1,7 +1,5 @@
-import { createEffect, createSignal, onMount, type Component } from 'solid-js';
-import { TonConnectButton } from '../../ton_connect/TonConnectButton';
+import { createEffect, createSignal, onMount, Show, type Component } from 'solid-js';
 import { initInitData, useViewport, } from '@telegram-apps/sdk-solid';
-import { useTonWallet } from '../../ton_connect/useTonWallet';
 import { useTonConnectUI } from '../../ton_connect/TonConnectCtx';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
@@ -18,23 +16,40 @@ export const TonConnectPage: Component = () => {
 
     const status = useAppStore((state) => state.status)
     const initialUser = useUserStore((state) => state.initialUser)
-    const user = useUserStore((state) => state.user)
+
 
 
     createEffect(() => {
         vp()?.expand()
+
     }, [])
 
-
-
-    if (status() === "failed") {
-        return <div class='w-full h-full text-white text-center'>loading </div>
+    const initialUserData = async () => {
+        if (initData) {
+            const user_data: UserType = {
+                authDate: initData.authDate.toLocaleDateString(),
+                isPremium: initData?.user!.isPremium,
+                my_referal_link: 'test',
+                userId: initData.user!.id,
+                userName: initData.user?.username,
+                firstName: initData.user?.firstName,
+                lastName: initData.user?.lastName,
+            }
+            initialUser(user_data)
+        }
     }
+    initialUserData()
+
+
+
+
     return (
 
-        <div class='w-screen h-screen relative flex flex-col justify-between items-center '>
-            <UserInfo />
-
+        <div class='w-screen h-screen relative flex flex-col justify-between items-center ' >
+            {status() === "loading" ?
+                <div class='w-full h-full text-white text-center'>{status()}</div>
+                :
+                <UserInfo />}
         </div >
 
 

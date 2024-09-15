@@ -5,7 +5,7 @@ import { immer } from 'zustand/middleware/immer'
 
 
 
-export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type StatusType = 'idle' | 'loading' | 'success' | 'failed'
 
 type AppStateType = {
     error: null | string
@@ -19,7 +19,7 @@ type AppStateType = {
 
 export const useAppStore = createWithSignal<AppStateType>()(immer((set, get) => ({
     error: null,
-    status: 'loading',
+    status: 'success',
     initialized: false,
     setStatus: (status: StatusType) => set(state => {
         state.status = status;
