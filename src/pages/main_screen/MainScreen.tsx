@@ -5,7 +5,7 @@ import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
 import { UserType, useUserStore } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
-import loading_lottie from '../../components/lottie_animation/loading_lottie.json'
+
 
 
 
@@ -52,7 +52,7 @@ export const TonConnectPage: Component = () => {
                         autoplay
                         loop
                         controls
-                        src='../../../src/components/lottie_animation/loading_lottie.json'
+                        src='https://kotpavlik.github.io/time_to_futures_tma/loading_lottie.json'
                         style={{ height: '100vh', width: '100vw', position: "relative" }}
                         buttons={[Buttons.Play, Buttons.Repeat, Buttons.Frame]}
                         theme={Theme.Transparent}
