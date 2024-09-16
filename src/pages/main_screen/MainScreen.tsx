@@ -4,6 +4,8 @@ import { useTonConnectUI } from '../../ton_connect/TonConnectCtx';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
 import { UserType, useUserStore } from '../../zustand/user_store/UserStore';
+import { Buttons, Player, Theme } from 'lottie-solid';
+import loading_lottie from '../../components/lottie_animation/loading_lottie.json'
 
 
 
@@ -16,7 +18,6 @@ export const TonConnectPage: Component = () => {
 
     const status = useAppStore((state) => state.status)
     const initialUser = useUserStore((state) => state.initialUser)
-
 
 
     createEffect(() => {
@@ -42,12 +43,39 @@ export const TonConnectPage: Component = () => {
 
 
 
-
     return (
 
         <div class='w-screen h-screen relative flex flex-col justify-between items-center ' >
             {status() === "loading" ?
-                <div class='w-full h-full text-white text-center'>{status()}</div>
+                <div class='w-full h-full text-white text-center'>
+                    <Player
+                        autoplay
+                        loop
+                        controls
+                        src='../../../src/components/lottie_animation/loading_lottie.json'
+                        style={{ height: '100vh', width: '100vw', position: "relative" }}
+                        buttons={[Buttons.Play, Buttons.Repeat, Buttons.Frame]}
+                        theme={Theme.Transparent}
+                    />
+                    <div class={`
+                absolute
+                bottom-[30%]
+                right-[50%]
+                translate-x-[50%]
+                inline-block 
+                text-[#00ff00]
+                select-none 
+                duration-500 
+                text-shadow
+                 w-auto
+                px-4 
+                py-2
+                font-bold 
+                text-6xl
+                group`}>
+                        {status()}
+                    </div>
+                </div>
                 :
                 <UserInfo />}
         </div >

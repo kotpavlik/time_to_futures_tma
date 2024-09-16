@@ -35,18 +35,14 @@ export const UserInfo = () => {
         setColor(newColor);
     };
 
-    // const incrementPoints = () => {
-    //     setPoints(prev => prev + 1); 
-    // };
-
-    const changeProgressBar = () => {
-        const currentLevel = checkAllUserPointsAndSetLevel(user().TTFEarnedUserCoins || 0);
+    const changeProgressBar = (points: number) => {
+        const currentLevel = checkAllUserPointsAndSetLevel(points);
         let maxPointsForCurrentLevel = Math.pow(2, currentLevel - 2) * 1000;
 
         if (currentLevel === 1) maxPointsForCurrentLevel = 0;
         const maxPointsForNextLevel = Math.pow(2, currentLevel - 1) * 1000;
 
-        const pointsForCurrentLevel = user().TTFEarnedUserCoins || 0 - maxPointsForCurrentLevel;
+        const pointsForCurrentLevel = points - maxPointsForCurrentLevel;
         const pointsToNextLevel = maxPointsForNextLevel - maxPointsForCurrentLevel;
         const progressPercentage = (pointsForCurrentLevel / pointsToNextLevel) * 100;
 
@@ -54,7 +50,9 @@ export const UserInfo = () => {
         changeProgressBarColor(progressPercentage)
     };
 
-
+    // const incrementPoints = () => {
+    //     setPoints(prev => prev + 1);
+    // };
 
     // createEffect(() => {
     //     changeProgressBar();
@@ -127,7 +125,7 @@ export const UserInfo = () => {
                 w-auto group`}>
                 <TonConnectButton />
             </div>
-            <div class="container w-[90%] text-center absolute bottom-[-40px] right-[50%]
+            <div class="container w-[90%] text-center absolute bottom-[-30px] right-[50%]
                 translate-x-[50%] ">
                 <div class="progress2 bg-black bg-opacity-25 p-1 rounded-full shadow-inner">
                     <div class="progress-bar2  h-4 rounded-full transition-all duration-400 ease-linear  "

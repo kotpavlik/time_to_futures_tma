@@ -33,6 +33,7 @@
         "axios": "^1.7.7",
         "gh-pages": "^6.1.1",
         "immer": "^10.1.1",
+        "lottie-solid": "^1.1.0",
         "solid-js": "^1.8.18",
         "solid-zustand": "^1.8.1",
         "tailwindcss-textshadow": "^2.1.3",
