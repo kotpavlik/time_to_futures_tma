@@ -80,6 +80,7 @@ export const UserInfo = () => {
                 py-2 
                 group`}>
 
+
                 <div class='flex '>
                     <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
                     <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
@@ -113,6 +114,8 @@ export const UserInfo = () => {
                 {user().LVL}
             </div>
 
+
+
             <div class={`
                 rounded-full 
                 border-none
@@ -125,6 +128,8 @@ export const UserInfo = () => {
                 w-auto group`}>
                 <TonConnectButton />
             </div>
+
+
             <div class="container w-[90%] text-center absolute bottom-[-30px] right-[50%]
                 translate-x-[50%] ">
                 <div class="progress2 bg-black bg-opacity-25 p-1 rounded-full shadow-inner">
@@ -136,6 +141,9 @@ export const UserInfo = () => {
                         }}></div>
                 </div>
             </div>
+
+
+
             <div class={`
                 absolute
                 bottom-[-90px]

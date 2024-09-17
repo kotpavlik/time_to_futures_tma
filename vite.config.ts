@@ -12,6 +12,7 @@ export default defineConfig({
     // devtools(),
     solidPlugin(), basicSsl()
   ],
+  server: { https: true },
   optimizeDeps: {
     exclude: ['react', 'react-dom'],
   },
