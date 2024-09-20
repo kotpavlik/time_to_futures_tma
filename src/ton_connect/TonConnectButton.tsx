@@ -16,7 +16,6 @@ export const TonConnectButton: Component = () => {
             actionsConfiguration: { twaReturnUrl: "https://google.com", notifications: "all" },
             uiPreferences: {
                 theme: "SYSTEM",
-                borderRadius: 'm',
                 colorsSet: {
                     [THEME.DARK]: {
                         connectButton: { background: "#3c4a49", foreground: "#00ff00" },

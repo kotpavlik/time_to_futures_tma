@@ -147,6 +147,8 @@ code {
 }
 .go1023101198 {
 border-radius:100% !important;
+min-width:auto !important;
+background:#3c4a49 !important;
 }
 .go409135432{
 display:none;
@@ -154,6 +156,7 @@ display:none;
 .go2267139606 {
     min-width:auto !important;
     background:#3c4a49 !important;
+    border-radius:100% !important;
 }
 .go2267139606 svg{
      width:30px !important;
