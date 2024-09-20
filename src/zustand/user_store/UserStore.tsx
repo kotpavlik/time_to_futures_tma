@@ -12,7 +12,7 @@ export type UserType = {
     lastName?: string | undefined
     userName: string | undefined
     isPremium: boolean | undefined
-    TTFUserCoins?: number
+    TTFSpentUserCoins?: number
     TTFEarnedUserCoins?: number
     LVL?: number
     successQuestion?: number
@@ -38,7 +38,7 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         my_referal_link: '',
         successQuestion: 0,
         TTFEarnedUserCoins: 0,
-        TTFUserCoins: 0,
+        TTFSpentUserCoins: 0,
         userId: null,
         userName: '',
         wallet_addres: '',

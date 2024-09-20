@@ -5,6 +5,8 @@ import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
 import { UserType, useUserStore } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
+import { QustionsRanks } from '../../components/questions/QuestionsRankes';
+import { Footer } from '../../components/footer/Footer';
 
 
 
@@ -45,7 +47,7 @@ export const TonConnectPage: Component = () => {
 
     return (
 
-        <div class='w-screen h-screen relative flex flex-col justify-between items-center ' >
+        <div class='w-screen h-screen relative flex flex-col justify-between items-center  ' >
 
             <Show when={status() === 'loading'}>
                 <div class='w-full h-full text-white text-center'>
@@ -81,6 +83,8 @@ export const TonConnectPage: Component = () => {
 
             <Show when={status() === 'success'}>
                 <UserInfo />
+                <QustionsRanks />
+                <Footer />
             </Show>
 
             <Show when={status() === 'failed'}>

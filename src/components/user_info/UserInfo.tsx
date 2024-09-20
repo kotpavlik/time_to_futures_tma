@@ -3,7 +3,7 @@ import { TonConnectButton } from "../../ton_connect/TonConnectButton";
 
 import { useUserStore } from "../../zustand/user_store/UserStore";
 import { useAppStore } from "../../zustand/app_store/AppStore";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onCleanup } from "solid-js";
 
 export const UserInfo = () => {
 
@@ -12,12 +12,12 @@ export const UserInfo = () => {
 
     const [width, setWidth] = createSignal(0);
     const [color, setColor] = createSignal("white")
+    const [displayedPoints, setDisplayedPoints] = createSignal(0);
 
 
     const checkAllUserPointsAndSetLevel = (points: number) => {
         let lvl = 1;
         let maxPointsForLevel = 1000;
-
         while (points >= maxPointsForLevel) {
             lvl++;
             maxPointsForLevel = Math.pow(2, lvl - 1) * 1000;
@@ -46,19 +46,43 @@ export const UserInfo = () => {
         const pointsToNextLevel = maxPointsForNextLevel - maxPointsForCurrentLevel;
         const progressPercentage = (pointsForCurrentLevel / pointsToNextLevel) * 100;
 
+
         setWidth(progressPercentage);
         changeProgressBarColor(progressPercentage)
     };
 
-    // const incrementPoints = () => {
-    //     setPoints(prev => prev + 1);
-    // };
 
-    // createEffect(() => {
-    //     changeProgressBar();
-    // });
-    // setInterval(incrementPoints, 10);
+    const checkFullNameLenght = (firstName: string | undefined, lastName: string | undefined) => {
+        const checkLenght = firstName! + lastName!
+        if (checkLenght.length > 15) {
+            return false
+        }
+        return true
+    }
 
+    const incrementPointsGradually = () => {
+        const interval = setInterval(() => {
+            // Увеличиваем отображаемое количество очков на 10 каждый раз
+            setDisplayedPoints((prev) => {
+                const userPoints = user().TTFEarnedUserCoins!;
+                if (prev >= userPoints) {
+                    clearInterval(interval);
+                    return prev; // Остановить инкремент, когда достигнуты реальные очки
+                }
+                return prev + 1; // Увеличение на 10 за каждый шаг
+            });
+        }, 5);
+        onCleanup(() => clearInterval(interval));
+    };
+
+    createEffect(() => {
+        incrementPointsGradually(); // Запуск анимации очков
+    });
+
+
+    createEffect(() => {
+        changeProgressBar(displayedPoints())
+    })
 
     return (
         <div class='text-lg w-full relative  text-cente flex justify-between items-center p-4'>
@@ -73,7 +97,8 @@ export const UserInfo = () => {
                 shadow 
                 active:shadow-lg 
                 duration-500 
-                ${user() && user().isPremium && 'shadow-[#00ff00] active:shadow-[#00ff00]'}
+                shadow-[#00ff00] 
+                active:shadow-[#00ff00]
                 bg-[#121214] 
                 w-auto
                 px-4 
@@ -85,7 +110,9 @@ export const UserInfo = () => {
                     <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
                     <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
                         {user() && user().firstName && user().lastName
-                            ? `${user().firstName} ${user().lastName}`
+                            ? checkFullNameLenght(user().lastName, user().firstName)
+                                ? `${user().firstName} ${user().lastName}`
+                                : user().firstName
                             : user().userName}
                     </div>
                 </div>
@@ -104,7 +131,8 @@ export const UserInfo = () => {
                 shadow 
                 active:shadow-lg 
                 duration-500 
-                ${user() && user().isPremium && 'shadow-[#00ff00] active:shadow-[#00ff00]'}
+              shadow-[#00ff00] 
+              active:shadow-[#00ff00]
                bg-[#121214] 
                  w-auto
                 px-4 
@@ -124,7 +152,8 @@ export const UserInfo = () => {
                 bg-[#00ff00]
                 active:shadow-lg 
                 duration-500 
-                ${user() && user().isPremium && 'shadow-[#00ff00] active:shadow-[#00ff00]'}
+                shadow-[#00ff00] 
+                active:shadow-[#00ff00]
                 w-auto group`}>
                 <TonConnectButton />
             </div>
@@ -142,8 +171,6 @@ export const UserInfo = () => {
                 </div>
             </div>
 
-
-
             <div class={`
                 absolute
                 bottom-[-90px]
@@ -159,7 +186,7 @@ export const UserInfo = () => {
                 py-2
                 font-bold 
                 group`}>
-                $TTF: {user().TTFUserCoins}
+                $TTF: {displayedPoints()}
             </div>
 
 
