@@ -23,7 +23,12 @@ export type UserType = {
 }
 export type UserStateType = {
     user: UserType
-    initialUser: (User: UserType) => void
+    initialUser: (user: UserType) => void
+    updateCoins: (coins_data: CoinsDataType) => void
+}
+export type CoinsDataType = {
+    coins: number
+    userId: number
 }
 
 
@@ -44,11 +49,11 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         wallet_addres: '',
         my_referer: null,
     },
-    initialUser: async (User: UserType) => {
+    initialUser: async (user: UserType) => {
         const { setStatus, setError } = useAppStore.getState()
         try {
-            setStatus("loading")
-            const UserRequest = await UserApi.InitialUser(User)
+            setStatus("first_loading")
+            const UserRequest = await UserApi.InitialUser(user)
             set(state => { state.user = UserRequest.data })
             setStatus("success")
         } catch (error) {
@@ -58,7 +63,17 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         }
 
     },
-    changePointsAndLVL: async (points: number) => {
-
+    updateCoins: async (coins_data: CoinsDataType) => {
+        const { setStatus, setError } = useAppStore.getState()
+        try {
+            setStatus("loading")
+            const UserRequest = await UserApi.UpdatePoints(coins_data)
+            set(state => { state.user = UserRequest.data })
+            setStatus("success")
+        } catch (error) {
+            const err = error as Error | AxiosError
+            HandleError(err)
+            setStatus("failed")
+        }
     }
 })))

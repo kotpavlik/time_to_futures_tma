@@ -5,7 +5,7 @@ import { immer } from 'zustand/middleware/immer'
 
 
 
-export type StatusType = 'idle' | 'loading' | 'success' | 'failed'
+export type StatusType = 'idle' | 'loading' | 'success' | 'failed' | 'first_loading'
 
 type AppStateType = {
     error: null | string

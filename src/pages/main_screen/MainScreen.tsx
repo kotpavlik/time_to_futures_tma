@@ -49,7 +49,7 @@ export const TonConnectPage: Component = () => {
 
         <div class='w-screen h-screen relative flex flex-col justify-between items-center  ' >
 
-            <Show when={status() === 'loading'}>
+            <Show when={status() === 'first_loading'}>
                 <div class='w-full h-full text-white text-center'>
                     <Player
                         autoplay
@@ -76,12 +76,12 @@ export const TonConnectPage: Component = () => {
                     font-bold
                     text-6xl
                     group`}>
-                        {status()}
+                        loading
                     </div>
                 </div>
             </Show>
 
-            <Show when={status() === 'success'}>
+            <Show when={status() === 'success' || status() === 'loading'}>
                 <UserInfo />
                 <QustionsRanks />
                 <Footer />

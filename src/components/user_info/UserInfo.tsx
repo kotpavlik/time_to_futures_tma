@@ -1,9 +1,13 @@
 import { date, initInitData } from "@telegram-apps/sdk-solid";
 import { TonConnectButton } from "../../ton_connect/TonConnectButton";
-
 import { useUserStore } from "../../zustand/user_store/UserStore";
 import { useAppStore } from "../../zustand/app_store/AppStore";
 import { createEffect, createSignal, onCleanup } from "solid-js";
+
+type UserCoinsType = {
+    user_earrned_coins: number
+    user_spent_coins: number
+}
 
 export const UserInfo = () => {
 
@@ -60,11 +64,12 @@ export const UserInfo = () => {
         return true
     }
 
-    const incrementPointsGradually = () => {
+
+    const incrementPointsGradually = (user_coins: UserCoinsType) => {
         const interval = setInterval(() => {
             // Увеличиваем отображаемое количество очков на 10 каждый раз
             setDisplayedPoints((prev) => {
-                const userPoints = user().TTFEarnedUserCoins!;
+                const userPoints = user_coins.user_earrned_coins + user_coins.user_spent_coins;
                 if (prev >= userPoints) {
                     clearInterval(interval);
                     return prev; // Остановить инкремент, когда достигнуты реальные очки
@@ -76,7 +81,11 @@ export const UserInfo = () => {
     };
 
     createEffect(() => {
-        incrementPointsGradually(); // Запуск анимации очков
+        const user_coins: UserCoinsType = {
+            user_earrned_coins: user().TTFEarnedUserCoins!,
+            user_spent_coins: user().TTFSpentUserCoins!
+        }
+        incrementPointsGradually(user_coins); // Запуск анимации очков
     });
 
 
