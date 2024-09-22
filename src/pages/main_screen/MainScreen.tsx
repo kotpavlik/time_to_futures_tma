@@ -19,6 +19,7 @@ export const TonConnectPage: Component = () => {
     const initData = initInitData();
 
     const status = useAppStore((state) => state.status)
+    const error = useAppStore((state) => state.error)
     const initialUser = useUserStore((state) => state.initialUser)
 
 
@@ -114,7 +115,7 @@ export const TonConnectPage: Component = () => {
                     font-bold
                     text-6xl
                     group`}>
-                        {status()}
+                        {error()}
                     </div>
                 </div>
             </Show>

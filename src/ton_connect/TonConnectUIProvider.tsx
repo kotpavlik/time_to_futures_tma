@@ -7,9 +7,6 @@ export interface TonConnectUIProviderProps extends ParentProps {
     manifestUrl: string;
 }
 
-// FIXME: Well, we found this code in the official tonconnect implementation for React. Doesn't
-//  seem to work the other way due to **constructor side effects**. Sad.
-//  https://github.com/ton-connect/sdk/blob/main/packages/ui-react/src/components/TonConnectUIProvider.tsx#L75
 let cached: TonConnectUI | undefined;
 
 export const TonConnectUIProvider: Component<TonConnectUIProviderProps> = (props) => {
