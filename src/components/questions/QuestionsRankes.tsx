@@ -23,17 +23,20 @@ export const QustionsRanks = () => {
 
     return (
         <Show when={user().TTFEarnedUserCoins !== 0} fallback={
-            <div class="h-full w-screen flex flex-col justify-center items-center ">
-                <div class='text-[#00ff00] p-4 m-8 rounded-xl text-left mess_for_user'>
-                    <span>Привет,{user().firstName} !
-                        <br /> Мы тебе не предлагаем "кнопку бабло"
+            <div class="h-full w-screen flex flex-col pt-8 items-center ">
+                <span class='block text-[#00ff00] text-xl uppercase font-bold text-center print'>
+                    Привет, {user().firstName} !
+                </span>
+                <div class='text-[#00ff00] text-sm p-4 m-6 rounded-xl text-left mess_for_user'>
+                    <span>
+                        Мы тебе не предлагаем "кнопку бабло"
                         <br />
                         <br /> Мы хотим тебе дать:
                         <br /> - Пониманеие работы с торговым терминалом бирж
                         <br /> - Рискменеджмент
                         <br /> - Понимание психологии рынков
-                        <br /> - Четкая торговая стратегия
-                        <br /> <br /> Если ты хочешь пройти обучение и начать торговать с нами в профит, то ждми START
+                        <br /> - Четкую торговую стратегию
+                        <br /> <br /> Если ты хочешь пройти обучение и начать торговать с нами в профит, то ждми <b>START</b>
                     </span> </div>
                 <button class="start_button">
                     <span class='span_button' onClick={StartPresent}>START</span>

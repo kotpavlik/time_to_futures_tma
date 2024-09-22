@@ -94,82 +94,74 @@ export const UserInfo = () => {
     })
 
     return (
-        <div class='text-lg w-full relative  text-cente flex justify-between items-center p-4'>
-            <div class={`
-                inline-block 
-                border-solid 
-                border-[0.5px] 
-                rounded-[15px] 
-                border-[#121214]
-                text-white 
-                select-none 
-                shadow 
-                active:shadow-lg 
-                duration-500 
-                shadow-[#00ff00] 
-                active:shadow-[#00ff00]
-                bg-[#121214] 
-                w-auto
-                px-4 
-                py-2 
-                group`}>
-
-
-                <div class='flex '>
-                    <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
-                    <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
-                        {user() && user().firstName && user().lastName
-                            ? checkFullNameLenght(user().lastName, user().firstName)
-                                ? `${user().firstName} ${user().lastName}`
-                                : user().firstName
-                            : user().userName}
+        <div class='text-lg w-full relative border-b-2 border-solid rounded-b-2xl'>
+            <div class=" text-cente flex justify-between items-center p-4 ">
+                <div class={`
+                    inline-block
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    shadow
+                    active:shadow-lg
+                    duration-500
+                    shadow-[#00ff00]
+                    active:shadow-[#00ff00]
+                    bg-[#121214]
+                    w-auto
+                    px-4
+                    py-2
+                    group`}>
+                    <div class='flex '>
+                        <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
+                        <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
+                            {user() && user().firstName && user().lastName
+                                ? checkFullNameLenght(user().lastName, user().firstName)
+                                    ? `${user().firstName} ${user().lastName}`
+                                    : user().firstName
+                                : user().userName}
+                        </div>
                     </div>
                 </div>
-
-
-
-            </div>
-            <div class={`
-                inline-block 
-                border-solid 
-                border-[0.5px] 
-                rounded-[15px] 
-                border-[#121214]
-                text-white 
-                select-none 
-                shadow 
-                active:shadow-lg 
-                duration-500 
-              shadow-[#00ff00] 
-              active:shadow-[#00ff00]
-               bg-[#121214] 
-                 w-auto
-                px-4 
-                py-2
-                font-bold 
-                group`}>
-                {user().LVL}
-            </div>
-
-
-
-            <div class={`
-                rounded-full 
-                border-none
-                select-none 
-                shadow 
-                bg-[#00ff00]
-                active:shadow-lg 
-                duration-500 
-                shadow-[#00ff00] 
-                active:shadow-[#00ff00]
-                w-auto group`}>
-                <TonConnectButton />
+                <div class={`
+                    inline-block
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    shadow
+                    active:shadow-lg
+                    duration-500
+                  shadow-[#00ff00]
+                  active:shadow-[#00ff00]
+                   bg-[#121214]
+                     w-auto
+                    px-4
+                    py-2
+                    font-bold
+                    group`}>
+                    {user().LVL}
+                </div>
+                <div class={`
+                    rounded-full
+                    border-none
+                    select-none
+                    shadow
+                    bg-[#00ff00]
+                    active:shadow-lg
+                    duration-500
+                    shadow-[#00ff00]
+                    active:shadow-[#00ff00]
+                    w-auto group`}>
+                    <TonConnectButton />
+                </div>
             </div>
 
-
-            <div class="container w-[90%] text-center absolute bottom-[-30px] right-[50%]
-                translate-x-[50%] ">
+            <div class="container w-[90%] text-center m-auto">
                 <div class="progress2 bg-black bg-opacity-25 p-1 rounded-full shadow-inner">
                     <div class="progress-bar2  h-4 rounded-full transition-all duration-400 ease-linear  "
                         style={{
@@ -181,16 +173,12 @@ export const UserInfo = () => {
             </div>
 
             <div class={`
-                absolute
-                bottom-[-90px]
-                right-[50%]
-                translate-x-[50%]
-                inline-block 
+                text-center
                 text-[#00ff00]
                 select-none 
                 duration-500 
                 text-shadow
-                 w-auto
+                w-auto
                 px-4 
                 py-2
                 font-bold 
