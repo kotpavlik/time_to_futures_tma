@@ -5,7 +5,7 @@ import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
 import { UserType, useUserStore } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
-import { QustionsRanks } from '../../components/questions/QuestionsRankes';
+import { QustionsRanks } from '../../components/questions/Questions';
 import { Footer } from '../../components/footer/Footer';
 
 

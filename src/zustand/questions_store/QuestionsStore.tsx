@@ -21,9 +21,7 @@ export type ChooseAnswers = {
     answer: string
     successAnswer: boolean
 }
-
-
-export type QuestionsStoreType = {
+export type QuestionType = {
     _id: string
     answerType: AnswerTypeEnum
     questionsTheme: QuestionsThemeEnum
@@ -32,23 +30,33 @@ export type QuestionsStoreType = {
     writeSuccessAnswer?: string
     trueOrFalse?: boolean
     TTFCoins?: number
+}
+
+
+export type QuestionsStoreType = {
+    Questions: QuestionType[]
     initialAllQuestions: () => void
 }
 
 export const useQuestionsStore = createWithSignal<QuestionsStoreType>()(immer((set, get) => ({
-    _id: '',
-    answerType: AnswerTypeEnum.CHOOSE,
-    question: '',
-    questionsTheme: QuestionsThemeEnum.EXCHANGE,
-    chooseAnswers: [],
-    trueOrFalse: false,
-    writeSuccessAnswer: '',
-    TTFCoins: 0,
+    Questions: [{
+        _id: '',
+        answerType: AnswerTypeEnum.CHOOSE,
+        question: '',
+        questionsTheme: QuestionsThemeEnum.EXCHANGE,
+        chooseAnswers: [],
+        trueOrFalse: false,
+        writeSuccessAnswer: '',
+        TTFCoins: 0,
+    }],
     initialAllQuestions: async () => {
         const { setStatus, setError } = useAppStore.getState()
+
         try {
+            setStatus('loading')
             const allQuestions = await QuestionsApi.getAllQuestions()
-            set(state => { state = allQuestions.data })
+            set(state => { state.Questions = allQuestions })
+            setStatus('success')
 
         } catch (error) {
             const err = error as Error | AxiosError

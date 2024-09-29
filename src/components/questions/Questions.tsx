@@ -1,12 +1,15 @@
 import { createEffect, Show } from "solid-js"
 import { useUserStore } from "../../zustand/user_store/UserStore"
 import './StartButton.css'
+import { useQuestionsStore } from "../../zustand/questions_store/QuestionsStore"
+import { QuestionsTheme } from "./questuionsTheme/QuestionsTheme"
 
 
 export const QustionsRanks = () => {
 
     const user = useUserStore((state) => state.user)
     const updateCoins = useUserStore((state) => state.updateCoins)
+    const questions = useQuestionsStore(state => state.Questions)
 
     const StartPresent = () => {
         if (user().TTFEarnedUserCoins === 0 && user().userId) {
@@ -20,6 +23,7 @@ export const QustionsRanks = () => {
 
 
     // добавить анимацию какуб нибудь 
+    console.log(questions())
 
     return (
         <Show when={user().TTFEarnedUserCoins !== 0} fallback={
@@ -43,11 +47,8 @@ export const QustionsRanks = () => {
                 </button>
             </div>
         }>
-            <div class='text-center text-white text-2xl h-full w-screen flex justify-center items-center  '>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class='h-full relative'>
+                <QuestionsTheme />
             </div>
 
         </Show>

@@ -46,5 +46,4 @@ export const useAppStore = createWithSignal<AppStateType>()(immer((set, get) => 
             set(state => { state.setStatus("failed") })
         }
     }
-
 })))
