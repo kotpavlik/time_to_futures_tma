@@ -93,6 +93,7 @@ export const UserInfo = () => {
         changeProgressBar(displayedPoints())
     })
 
+
     return (
         <div class='text-lg w-full relative border-b-2 border-solid rounded-b-2xl'>
             <div class=" text-cente flex justify-between items-center p-4 ">

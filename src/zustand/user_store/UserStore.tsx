@@ -7,6 +7,7 @@ import { useAppStore } from '../app_store/AppStore';
 
 
 export type UserType = {
+    _id?: string,
     userId: number | null
     firstName?: string | undefined
     lastName?: string | undefined
@@ -35,6 +36,7 @@ export type CoinsDataType = {
 
 export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) => ({
     user: {
+        _id: '',
         authDate: '',
         firstName: '',
         isPremium: false,
@@ -52,7 +54,7 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
     initialUser: async (user: UserType) => {
         const { setStatus, setError } = useAppStore.getState()
         try {
-            setStatus("first_loading")
+            setStatus("loading")
             const UserRequest = await UserApi.InitialUser(user)
             set(state => { state.user = UserRequest.data })
             setStatus("success")

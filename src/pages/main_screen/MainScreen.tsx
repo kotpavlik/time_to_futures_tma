@@ -19,8 +19,8 @@ export const TonConnectPage: Component = () => {
     const initData = initInitData();
 
     const status = useAppStore((state) => state.status)
-    const error = useAppStore((state) => state.error)
-    const initialUser = useUserStore((state) => state.initialUser)
+    const initialized = useAppStore((state) => state.initialized)
+    const initializeApp = useAppStore((state) => state.initializeApp)
 
 
     createEffect(() => {
@@ -39,18 +39,17 @@ export const TonConnectPage: Component = () => {
                 firstName: initData.user?.firstName,
                 lastName: initData.user?.lastName,
             }
-            initialUser(user_data)
+            initializeApp(user_data)
         }
     }
     initialUserData()
-
 
 
     return (
 
         <div class='w-screen h-screen relative flex flex-col justify-between items-center  ' >
 
-            <Show when={status() === 'first_loading'}>
+            <Show when={initialized() === false}>
                 <div class='w-full h-full text-white text-center'>
                     <Player
                         autoplay
@@ -115,7 +114,7 @@ export const TonConnectPage: Component = () => {
                     font-bold
                     text-6xl
                     group`}>
-                        {error()}
+                        {status()}
                     </div>
                 </div>
             </Show>

@@ -44,7 +44,10 @@ export const QustionsRanks = () => {
             </div>
         }>
             <div class='text-center text-white text-2xl h-full w-screen flex justify-center items-center  '>
-                Серый давай работать над обучалкой
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
 
         </Show>
