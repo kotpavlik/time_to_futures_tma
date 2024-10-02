@@ -2,6 +2,10 @@ import { QuestionsThemeEnum } from "../../../zustand/questions_store/QuestionsSt
 
 export const QuestionsTheme = () => {
 
+    function redirectToQuestions(theme: string) {
+
+    }
+
 
     return (
         <div class="text-center text-white text-2xl h-full w-screen  ">
@@ -22,7 +26,7 @@ export const QuestionsTheme = () => {
                     px-4
                     py-2
                     m-6
-                    group`}>{QuestionsThemeEnum.EXCHANGE}</div>
+                    group`}>Биржи</div>
             <div class={`
                     border-solid
                     border-[0.5px]
@@ -40,7 +44,7 @@ export const QuestionsTheme = () => {
                     px-4
                     py-2
                      m-6
-                    group`}>{QuestionsThemeEnum.PSYCHOLOGY}</div>
+                    group`}>Психология рынка</div>
             <div class={`
                     border-solid
                     border-[0.5px]
@@ -58,7 +62,7 @@ export const QuestionsTheme = () => {
                     px-4
                     py-2
                      m-6
-                    group`}>{QuestionsThemeEnum.STRATEGY}</div>
+                    group`}>Теория</div>
             <div class={`
                     border-solid
                     border-[0.5px]
@@ -76,7 +80,7 @@ export const QuestionsTheme = () => {
                     px-4
                     py-2
                      m-6
-                    group`}>{QuestionsThemeEnum.THEORY}</div>
+                    group`}>Стратегия</div>
         </div>
     )
 }
