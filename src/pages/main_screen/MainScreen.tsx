@@ -1,22 +1,28 @@
-import { createEffect, createSignal, onMount, Show, type Component } from 'solid-js';
-import { initInitData, useViewport, } from '@telegram-apps/sdk-solid';
+import { createEffect, Show, type Component } from 'solid-js';
+import { initInitData, useViewport, BackButton, useBackButton } from '@telegram-apps/sdk-solid';
 import { useTonConnectUI } from '../../ton_connect/TonConnectCtx';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
-import { UserType, useUserStore } from '../../zustand/user_store/UserStore';
+import { UserType } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
-import { QustionsRanks } from '../../components/questions/Questions';
 import { Footer } from '../../components/footer/Footer';
+import { RouteSectionProps } from '@solidjs/router';
 
 
 
 
-export const TonConnectPage: Component = () => {
+
+
+
+export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) => {
 
 
     const vp = useViewport();
     const context = useTonConnectUI()
     const initData = initInitData();
+
+
+
 
     const status = useAppStore((state) => state.status)
     const initialized = useAppStore((state) => state.initialized)
@@ -44,6 +50,8 @@ export const TonConnectPage: Component = () => {
     }
     initialUserData()
 
+
+    console.log(context[0]().account)
 
     return (
 
@@ -83,11 +91,14 @@ export const TonConnectPage: Component = () => {
 
             <Show when={status() === 'success' || status() === 'loading'}>
                 <UserInfo />
-                <QustionsRanks />
+
+                {children}
+
                 <Footer />
             </Show>
 
             <Show when={status() === 'failed'}>
+
                 <div class='w-full h-full text-white text-center'>
                     <Player
                         autoplay

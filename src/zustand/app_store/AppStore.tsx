@@ -35,10 +35,12 @@ export const useAppStore = createWithSignal<AppStateType>()(immer((set, get) => 
         const { initialUser } = useUserStore.getState()
         const { initialAllQuestions } = useQuestionsStore.getState()
         try {
+
             await Promise.all([
                 initialUser(user),
                 initialAllQuestions()
             ]);
+
             set(state => { state.initialized = true })
         } catch (error) {
             const err = error as Error | AxiosError

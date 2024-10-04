@@ -1,8 +1,11 @@
 import type { Component } from 'solid-js';
-import { Router, Route } from "@solidjs/router";
+import { Route, Router } from "@solidjs/router";
 import { NotFounded } from './pages/404/NotFounded';
 import WebApp from '@twa-dev/sdk'
-import { TonConnectPage } from './pages/main_screen/MainScreen';
+import { MainScreen } from './pages/main_screen/MainScreen';
+import { QustionsRanks } from './components/questions/Questions';
+import { Wallet } from './components/wallet/Wallet';
+
 
 
 WebApp.ready();
@@ -15,10 +18,12 @@ const App: Component = () => {
 
   return (
     <div class='w-screen h-svh relative bg-[#1a1a1a]'>
-      <Router>
-        <Route path="/" component={TonConnectPage} />
-        <Route path="*404" component={NotFounded} />
+      <Router root={MainScreen} >
+        <Route path="/" component={QustionsRanks} />
+        <Route path="/wallet" component={Wallet} />
+        <Route path="*" component={NotFounded} />
       </Router>
+
     </div>
 
   );
