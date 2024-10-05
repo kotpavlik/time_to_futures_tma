@@ -7,4 +7,7 @@ export const instance = axios.create({
     withCredentials: true,
 })
 
-
+export const walletDataInstance = axios.create({
+    baseURL: import.meta.env.VITE_TONAPI,
+    withCredentials: true,
+})

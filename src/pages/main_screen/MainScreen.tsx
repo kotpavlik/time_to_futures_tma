@@ -1,5 +1,5 @@
 import { createEffect, Show, type Component } from 'solid-js';
-import { initInitData, useViewport, BackButton, useBackButton } from '@telegram-apps/sdk-solid';
+import { initInitData, useViewport } from '@telegram-apps/sdk-solid';
 import { useTonConnectUI } from '../../ton_connect/TonConnectCtx';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';

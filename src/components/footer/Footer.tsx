@@ -1,4 +1,5 @@
-import { Navigate, Route, useNavigate } from "@solidjs/router"
+import { useNavigate } from "@solidjs/router"
+import { useBackButton } from "@telegram-apps/sdk-solid";
 
 
 
@@ -7,9 +8,11 @@ import { Navigate, Route, useNavigate } from "@solidjs/router"
 export const Footer = () => {
 
     const navigate = useNavigate();
+    const back_button_show = useBackButton()
 
     const goToWallet = () => {
         navigate("/wallet", { replace: true })
+        back_button_show().show()
     }
 
     return (
