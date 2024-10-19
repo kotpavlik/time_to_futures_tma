@@ -1,0 +1,28 @@
+.modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    background:black;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Начальная прозрачность */
+    transform: translateY(-20px); /* Начальное смещение */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Параметры перехода */
+}
+
+.fixed {
+    /* Этот класс отвечает за позиционирование модалки */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.show {
+    opacity: 1; /* Прозрачность при показе */
+    transform: translateY(0);
+     transition: opacity 0.5s ease, transform 0.5s ease; /* Отмена смещения */
+}

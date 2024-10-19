@@ -39,13 +39,13 @@ export const useWalletStore = createWithSignal<WalletStoreType>()(immer((set, ge
         const { setStatus, setError } = useAppStore.getState()
         try {
             setStatus("loading")
-            const get_jettons = await walletApi.getJettons(wallet_address)
-            if (get_jettons && wallet_address) {
+            const { balances }: any = await walletApi.getJettons(wallet_address)
+            if (balances && wallet_address) {
                 set((state) => {
                     state.wallet_address = wallet_address,
-                        state.balances = get_jettons
+                        state.balances = balances
                 })
-                console.log(get_jettons)
+                console.log(balances)
             }
             setStatus("success")
         } catch (error) {
