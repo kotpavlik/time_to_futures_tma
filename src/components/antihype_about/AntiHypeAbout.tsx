@@ -1,12 +1,7 @@
-import { A, useNavigate } from "@solidjs/router"
-import { useBackButton } from "@telegram-apps/sdk-solid";
-import { createEffect } from "solid-js";
 
 
 export const AntiHypeAbout = () => {
 
-    const BackButton = useBackButton();
-    const navigate = useNavigate();
 
 
     const openExternalLink = (url: string) => {

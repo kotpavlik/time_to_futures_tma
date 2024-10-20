@@ -18,7 +18,7 @@ export const Modal: Component<ModalType> = ({ onClose, modal_name, modal_content
             <div class={`modal-content 
                     relative
                     px-4
-                    pb-[60px]
+                    pb-[80px]
                     pt-[52px]
                     h-[90%]
                     w-[90%]

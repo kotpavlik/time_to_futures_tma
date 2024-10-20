@@ -35,7 +35,7 @@ export const QuestionsTheme = () => {
                     group
                     relative`}
                 onclick={openModal}>
-                <img src="../../../../src/assets/antihyp.png" alt="bg" class=" object-cover " />
+                <img src="/public/assets/antihyp.png" alt="bg" class=" object-cover " />
                 <div class="absolute top-0 w-full h-full bg-black/[.5] active:bg-black/[.05] duration-500">
                     <div class="absolute bottom-0 p-4 w-full">
                         все о Antihyip Advisor v2.0</div>
