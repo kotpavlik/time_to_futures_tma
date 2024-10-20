@@ -24,7 +24,7 @@ export const AntiHypeAbout = () => {
             </p>
 
             <p class="text-xs font-bold pt-1 ">
-                <img src="../../../src/assets/gifs/rzF.gif" alt="hello gif" />
+                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/rzF.gif" alt="hello gif" />
             </p>
 
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
@@ -40,7 +40,7 @@ export const AntiHypeAbout = () => {
                 В 2014 году я пришел работать менеджером в финансовый отдел банковского брокера - обрабатывать заявки от клиентов на открытие счетов. На самом деле это та еще скукота, я чуть не уволился. Однако меня очень интересовал рынок еще с начала 2008 года и кризиса, когда мой школьный учитель смог заработать более 140% за год на падении рынков! Как? <span class="text-[#00ff00] font-bold">Вот и я захотел разобраться</span> 🤓
             </p>
             <p class="text-xs font-bold pt-4 ">
-                <img src="../../../src/assets/gifs/4BON.gif" alt="hello gif" width={'100%'} />
+                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/4BON.gif" alt="hello gif" width={'100%'} />
             </p>
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
                 Как я видел трейдеров в 2014 году
@@ -61,7 +61,7 @@ export const AntiHypeAbout = () => {
                 </ul>
             </div>
             <p class="text-xs font-bold pt-4 ">
-                <img src="../../../src/assets/gifs/NHlv.gif" alt="hello gif" width={'100%'} />
+                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/NHlv.gif" alt="hello gif" width={'100%'} />
             </p>
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
                 вспомнил свой 2016
@@ -122,7 +122,7 @@ export const AntiHypeAbout = () => {
             </p>
 
             <p class="text-xs font-bold pt-4 ">
-                <img src="../../../src/assets/gifs/59KW.gif" alt="hello gif" width={'100%'} />
+                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/59KW.gif" alt="hello gif" width={'100%'} />
             </p>
 
             <p class="text-xs font-bold pt-4 text-[#ff2b9c]">
