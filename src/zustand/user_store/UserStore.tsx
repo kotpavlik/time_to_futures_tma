@@ -26,9 +26,14 @@ export type UserStateType = {
     user: UserType
     initialUser: (user: UserType) => void
     updateCoins: (coins_data: CoinsDataType) => void
+    updateLvL: (lvl_data: UpdateLvLType) => void
 }
 export type CoinsDataType = {
     coins: number
+    userId: number
+}
+export type UpdateLvLType = {
+    lvl: number
     userId: number
 }
 
@@ -77,5 +82,19 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
             HandleError(err)
             setStatus("failed")
         }
-    }
-})))
+    },
+    updateLvL: async (lvl: UpdateLvLType) => {
+        const { setStatus, setError } = useAppStore.getState()
+        try {
+            setStatus("loading")
+            const UserRequest = await UserApi.UpdateLvL(lvl)
+            set(state => { state.user = UserRequest.data })
+            setStatus("success")
+        } catch (error) {
+            const err = error as Error | AxiosError
+            HandleError(err)
+            setStatus("failed")
+        }
+    },
+}
+)))

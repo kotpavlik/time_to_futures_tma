@@ -1,7 +1,6 @@
-import { date, initInitData } from "@telegram-apps/sdk-solid";
+import { initInitData } from "@telegram-apps/sdk-solid";
 import { TonConnectButton } from "../../ton_connect/TonConnectButton";
-import { useUserStore } from "../../zustand/user_store/UserStore";
-import { useAppStore } from "../../zustand/app_store/AppStore";
+import { UpdateLvLType, useUserStore } from "../../zustand/user_store/UserStore";
 import { createEffect, createSignal, onCleanup } from "solid-js";
 
 type UserCoinsType = {
@@ -13,10 +12,19 @@ export const UserInfo = () => {
 
     const initData = initInitData();
     const user = useUserStore((state) => state.user)
+    const user_id = useUserStore(state => state.user.userId)
+    const updateLvL = useUserStore((state) => state.updateLvL)
 
     const [width, setWidth] = createSignal(0);
     const [color, setColor] = createSignal("white")
     const [displayedPoints, setDisplayedPoints] = createSignal(0);
+    const [isLVL, setLVL] = createSignal(0);
+    const [userID, setUserID] = createSignal(0)
+
+    if (user_id() !== null) {
+        setUserID(user_id()!)
+    }
+
 
 
     const checkAllUserPointsAndSetLevel = (points: number) => {
@@ -26,6 +34,7 @@ export const UserInfo = () => {
             lvl++;
             maxPointsForLevel = Math.pow(2, lvl - 1) * 1000;
         }
+        setLVL(lvl)
         return lvl;
     }
 
@@ -41,8 +50,8 @@ export const UserInfo = () => {
 
     const changeProgressBar = (points: number) => {
         const currentLevel = checkAllUserPointsAndSetLevel(points);
-        let maxPointsForCurrentLevel = Math.pow(2, currentLevel - 2) * 1000;
 
+        let maxPointsForCurrentLevel = Math.pow(2, currentLevel - 2) * 1000;
         if (currentLevel === 1) maxPointsForCurrentLevel = 0;
         const maxPointsForNextLevel = Math.pow(2, currentLevel - 1) * 1000;
 
@@ -53,6 +62,7 @@ export const UserInfo = () => {
 
         setWidth(progressPercentage);
         changeProgressBarColor(progressPercentage)
+
     };
 
 
@@ -80,6 +90,8 @@ export const UserInfo = () => {
         onCleanup(() => clearInterval(interval));
     };
 
+
+
     createEffect(() => {
         const user_coins: UserCoinsType = {
             user_earrned_coins: user().TTFEarnedUserCoins!,
@@ -90,8 +102,19 @@ export const UserInfo = () => {
 
 
     createEffect(() => {
+
         changeProgressBar(displayedPoints())
+
     })
+
+    createEffect(() => {
+        if (user().LVL !== isLVL()) {
+            updateLvL({ lvl: isLVL(), userId: userID() })
+        }
+        return
+    })
+
+
 
 
     return (

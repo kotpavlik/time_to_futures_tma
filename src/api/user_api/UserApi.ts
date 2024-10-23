@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { instance } from "../api";
-import { CoinsDataType, UserType } from "../../zustand/user_store/UserStore";
+import { CoinsDataType, UpdateLvLType, UserType } from "../../zustand/user_store/UserStore";
 
 
 
@@ -12,6 +12,10 @@ export const UserApi = {
     },
     async UpdatePoints(coins_data: CoinsDataType): Promise<AxiosResponse> {
         const response = await instance.put<CoinsDataType, Promise<AxiosResponse>>('update_coins', coins_data)
+        return response
+    },
+    async UpdateLvL(updateLvL_data: UpdateLvLType): Promise<AxiosResponse> {
+        const response = await instance.put<UpdateLvLType, Promise<AxiosResponse>>('update_lvl', updateLvL_data)
         return response
     }
 }

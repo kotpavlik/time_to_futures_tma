@@ -1,6 +1,27 @@
+import { Component, createSignal } from 'solid-js';
+import { CoinsDataType, useUserStore } from '../../zustand/user_store/UserStore';
+import './AntiHypeAboutButton.css';
 
 
-export const AntiHypeAbout = () => {
+export const AntiHypeAbout = (onClose: () => void) => {
+
+    const uppdateCoins = useUserStore(state => state.updateCoins)
+    const user_id = useUserStore(state => state.user.userId)
+
+
+
+    const uppdateCoinsForAboutAntihype = () => {
+        if (user_id !== null) {
+            const earn_coins: CoinsDataType = {
+                coins: 250,
+                userId: user_id()!
+            }
+            onClose()
+            uppdateCoins(earn_coins)
+        }
+
+    }
+
 
 
 
@@ -9,7 +30,7 @@ export const AntiHypeAbout = () => {
     };
 
     return (
-        <div class="text-start">
+        <div class="text-start flex flex-col items-center">
             <h1 class="text-sm font-extrabold pt-4">
                 Презентация инвестиционного продукта канала - фьючерсного сигнального советника <span class="text-[#ff2b9c]">Antihyip Advisor v2.0</span>
             </h1>
@@ -39,7 +60,7 @@ export const AntiHypeAbout = () => {
                 Меня зовут <span class='text-[#00ff00] font-bold'>Сергей</span>, и уже <span class='text-[#00ff00] font-bold'>9-й год я живу рынком</span>, а <span class="text-[#00ff00] font-bold">70%</span> моего дохода  - это <span class="uppercase text-[#00ff00] font-bold">трейдинг</span>.
                 В 2014 году я пришел работать менеджером в финансовый отдел банковского брокера - обрабатывать заявки от клиентов на открытие счетов. На самом деле это та еще скукота, я чуть не уволился. Однако меня очень интересовал рынок еще с начала 2008 года и кризиса, когда мой школьный учитель смог заработать более 140% за год на падении рынков! Как? <span class="text-[#00ff00] font-bold">Вот и я захотел разобраться</span> 🤓
             </p>
-            <p class="text-xs font-bold pt-4 ">
+            <p class="text-xs w-full font-bold pt-4 ">
                 <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/4BON.gif" alt="hello gif" width={'100%'} />
             </p>
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
@@ -121,7 +142,7 @@ export const AntiHypeAbout = () => {
                              transition-all rounded-sm not-italic'>ТУТ</span>
             </p>
 
-            <p class="text-xs font-bold pt-4 ">
+            <p class="text-xs font-bold w-full pt-4 ">
                 <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/59KW.gif" alt="hello gif" width={'100%'} />
             </p>
 
@@ -137,9 +158,11 @@ export const AntiHypeAbout = () => {
             </p>
             <p class="text-xs font-bold pt-4 text-[#ff2b9c] uppercase">
                 хочешь получить доступ?
-                <br />нужно выполнить пару заданий
-                <br /> <span class="text-[#00ff00]">изучай дальше</span>
             </p>
+            <button onClick={uppdateCoinsForAboutAntihype}
+                class="go_next_button text-white select-none w-auto mt-4 text-2xl bg-[#ff2b9c]
+             transition-all rounded-sm p-2 uppercase
+            "><span class='bg-gray-900/60 p-1  rounded-sm active:bg-gray-900/80  transition'>погнали дальше</span></button>
         </div>
     )
 }

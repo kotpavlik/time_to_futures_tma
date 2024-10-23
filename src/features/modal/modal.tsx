@@ -4,7 +4,7 @@ import './modal.css';
 type ModalType = {
     onClose: () => void
     modal_name: string
-    modal_content: () => JSX.Element
+    modal_content: (onClose: () => void) => JSX.Element
 }
 
 
@@ -34,7 +34,7 @@ export const Modal: Component<ModalType> = ({ onClose, modal_name, modal_content
 
                 <div class='h-[100%]
                     w-[100%] overflow-y-scroll'>
-                    {modal_content()}
+                    {modal_content(onClose)}
 
                 </div>
                 <button class="bg-[#00ff00] text-white px-4 py-4 rounded-bl-[15px]  absolute top-0 right-0"

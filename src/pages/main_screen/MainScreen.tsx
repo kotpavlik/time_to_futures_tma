@@ -1,5 +1,4 @@
 import { createEffect, Show, type Component } from 'solid-js';
-import { initInitData, useViewport } from '@telegram-apps/sdk-solid';
 import { useTonConnectUI } from '../../ton_connect/TonConnectCtx';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
@@ -7,6 +6,7 @@ import { UserType } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
 import { Footer } from '../../components/footer/Footer';
 import { RouteSectionProps } from '@solidjs/router';
+import { initInitData, useViewport } from '@telegram-apps/sdk-solid';
 
 
 
@@ -51,13 +51,13 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
     initialUserData()
 
 
-    console.log(context[0]().account)
+
 
     return (
 
         <div class='w-screen h-screen relative flex flex-col justify-between items-center  ' >
 
-            <Show when={initialized() === false}>
+            <Show when={initialized() === false && status() !== 'failed'}>
                 <div class='w-full h-full text-white text-center'>
                     <Player
                         autoplay
@@ -97,7 +97,7 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
                 <Footer />
             </Show>
 
-            <Show when={status() === 'failed'}>
+            <Show when={initialized() === false && status() === 'failed'}>
 
                 <div class='w-full h-full text-white text-center'>
                     <Player

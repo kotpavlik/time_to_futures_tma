@@ -1,0 +1,19 @@
+.go_next_button {
+  	background-image: repeating-linear-gradient(-45deg, transparent, transparent 1rem, #00ff00 1rem, #00ff00 2rem);
+	background-size: 200% 200%;
+    text-shadow: 1px 1px 1px black;
+	animation: gradient 10s linear infinite;
+}
+.go_next_button:active {
+  	background-image: repeating-linear-gradient(45deg, transparent, transparent 1rem, #00ff00 1rem, #00ff00 2rem);
+	background-size: 500% 100%;
+    text-shadow: 1px 1px 1px black;
+	animation: gradient 5s linear infinite;
+}
+
+
+@keyframes gradient {
+	100% {
+		background-position: 100% 100%;
+	}
+}
