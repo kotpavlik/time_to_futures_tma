@@ -1,12 +1,17 @@
 import { Component, createSignal } from 'solid-js';
 import { CoinsDataType, useUserStore } from '../../zustand/user_store/UserStore';
 import './AntiHypeAboutButton.css';
+import { useQuestionsStore } from '../../zustand/questions_store/QuestionsStore';
 
 
 export const AntiHypeAbout = (onClose: () => void) => {
 
     const uppdateCoins = useUserStore(state => state.updateCoins)
     const user_id = useUserStore(state => state.user.userId)
+    const questions_data = useQuestionsStore(state => state.Questions)
+    const setVerified = useQuestionsStore(state => state.setVerified)
+
+
 
 
 
@@ -16,10 +21,14 @@ export const AntiHypeAbout = (onClose: () => void) => {
                 coins: 250,
                 userId: user_id()!
             }
+            // const AboutAntiHype = questions_data().filter(question => question.question === 'AntiHypeAboutbout')
+            // console.log(AboutAntiHype)
+
             onClose()
             uppdateCoins(earn_coins)
-        }
+            // setVerified({ id: AboutAntiHype[0]._id, verified: true })
 
+        }
     }
 
 

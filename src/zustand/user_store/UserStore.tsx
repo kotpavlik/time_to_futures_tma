@@ -88,8 +88,11 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         try {
             setStatus("loading")
             const UserRequest = await UserApi.UpdateLvL(lvl)
-            set(state => { state.user = UserRequest.data })
-            setStatus("success")
+            if (UserRequest) {
+                set(state => { state.user = UserRequest.data })
+                setStatus("success")
+            }
+
         } catch (error) {
             const err = error as Error | AxiosError
             HandleError(err)

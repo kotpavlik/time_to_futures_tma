@@ -89,7 +89,7 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
                 </div>
             </Show>
 
-            <Show when={status() === 'success' || status() === 'loading'}>
+            <Show when={status() === 'success' || status() === 'loading' && initialized() === true}>
                 <UserInfo />
 
                 {children}

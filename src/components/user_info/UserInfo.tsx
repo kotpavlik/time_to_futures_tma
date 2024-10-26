@@ -2,6 +2,7 @@ import { initInitData } from "@telegram-apps/sdk-solid";
 import { TonConnectButton } from "../../ton_connect/TonConnectButton";
 import { UpdateLvLType, useUserStore } from "../../zustand/user_store/UserStore";
 import { createEffect, createSignal, onCleanup } from "solid-js";
+import { debounce } from "../../features/debounce/debounce";
 
 type UserCoinsType = {
     user_earrned_coins: number
@@ -19,11 +20,7 @@ export const UserInfo = () => {
     const [color, setColor] = createSignal("white")
     const [displayedPoints, setDisplayedPoints] = createSignal(0);
     const [isLVL, setLVL] = createSignal(0);
-    const [userID, setUserID] = createSignal(0)
 
-    if (user_id() !== null) {
-        setUserID(user_id()!)
-    }
 
 
 
@@ -102,14 +99,13 @@ export const UserInfo = () => {
 
 
     createEffect(() => {
-
         changeProgressBar(displayedPoints())
-
     })
 
     createEffect(() => {
-        if (user().LVL !== isLVL()) {
-            updateLvL({ lvl: isLVL(), userId: userID() })
+        if (user_id() && user().LVL && user().LVL !== isLVL()) {
+            debounce(() => updateLvL({ lvl: isLVL(), userId: user_id()! }), 1000)
+
         }
         return
     })
