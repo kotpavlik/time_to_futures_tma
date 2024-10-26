@@ -104,7 +104,10 @@ export const UserInfo = () => {
 
     createEffect(() => {
         if (user_id() && user().LVL && user().LVL !== isLVL()) {
-            debounce(() => updateLvL({ lvl: isLVL(), userId: user_id()! }), 1000)
+            const debouncedUpdateLvL = debounce((lvl: number, userId: number) => {
+                updateLvL({ lvl, userId });
+            }, 1000);
+            debouncedUpdateLvL(isLVL(), user_id()!);
 
         }
         return

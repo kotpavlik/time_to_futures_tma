@@ -5,5 +5,5 @@ export const debounce = <T extends (...args: any[]) => any>(func: T, delay: numb
     return (...args: Parameters<T>) => {
         clearTimeout(timeout);
         timeout = setTimeout(() => func(...args), delay);
-    }
+    };
 }

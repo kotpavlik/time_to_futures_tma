@@ -35,7 +35,7 @@ export type QuestionType = {
 
 export type VerifiedDataType = {
     id: string
-    verified: boolean
+    update_data: Object
 }
 
 
@@ -76,11 +76,16 @@ export const useQuestionsStore = createWithSignal<QuestionsStoreType>()(immer((s
         const { setStatus, setError } = useAppStore.getState()
         try {
             setStatus('loading')
-            console.log(verified_data)
-            const allQuestions = await QuestionsApi.setVerefied(verified_data)
-            console.log(allQuestions)
-            set(state => { state.Questions = allQuestions })
-            console.log(get().Questions)
+            const verifiedQuestion = await QuestionsApi.setVerefied(verified_data)
+
+            set(state => {
+                const index = state.Questions.findIndex(quest => quest._id === verified_data.id);
+
+                if (index !== -1) {
+                    state.Questions[index] = verifiedQuestion; // Заменяем объект на verifiedQuestion
+                }
+            });
+
             setStatus('success')
 
         } catch (error) {

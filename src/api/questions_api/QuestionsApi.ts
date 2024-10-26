@@ -10,9 +10,8 @@ export const QuestionsApi = {
 
     },
 
-    async setVerefied(verified_data: VerifiedDataType): Promise<QuestionType[]> {
-        const response: AxiosResponse<QuestionType[]> = await instance.put<QuestionType[]>('question', { verified_data })
-        console.log(response.data)
+    async setVerefied(verified_data: VerifiedDataType): Promise<QuestionType> {
+        const response: AxiosResponse<QuestionType> = await instance.put<QuestionType>('question', verified_data)
         return response.data
     }
 }

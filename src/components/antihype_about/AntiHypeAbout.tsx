@@ -21,17 +21,18 @@ export const AntiHypeAbout = (onClose: () => void) => {
                 coins: 250,
                 userId: user_id()!
             }
-            // const AboutAntiHype = questions_data().filter(question => question.question === 'AntiHypeAboutbout')
-            // console.log(AboutAntiHype)
+
+            const AboutAntiHype = questions_data().filter(question => question.question === 'AntiHypeAboutbout')
 
             onClose()
             uppdateCoins(earn_coins)
-            // setVerified({ id: AboutAntiHype[0]._id, verified: true })
+            setVerified({ id: AboutAntiHype[0]._id, update_data: { verified: true } })
 
         }
     }
 
 
+    const [verified] = questions_data().filter(question => question.question === 'AntiHypeAboutbout')
 
 
     const openExternalLink = (url: string) => {
@@ -168,10 +169,13 @@ export const AntiHypeAbout = (onClose: () => void) => {
             <p class="text-xs font-bold pt-4 text-[#ff2b9c] uppercase">
                 хочешь получить доступ?
             </p>
-            <button onClick={uppdateCoinsForAboutAntihype}
-                class="go_next_button text-white select-none w-auto mt-4 text-2xl bg-[#ff2b9c]
-             transition-all rounded-sm p-2 uppercase
-            "><span class='bg-gray-900/60 p-1  rounded-sm active:bg-gray-900/80  transition'>погнали дальше</span></button>
+            <button onClick={uppdateCoinsForAboutAntihype} disabled={verified.verified}
+
+                class={`go_next_button text-white select-none w-auto mt-4 text-2xl 
+                    ${verified.verified ? 'bg-[#888888]' : 'bg-[#ff2b9c]'}
+            transition-all rounded-sm p-2 uppercase
+            `}><span class='bg-gray-900/60 p-1  rounded-sm active:bg-gray-900/80  transition'>
+                    {verified.verified ? 'пусто' : 'погнали дальше'}</span></button>
         </div>
     )
 }
