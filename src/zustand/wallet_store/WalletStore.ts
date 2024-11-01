@@ -45,7 +45,7 @@ export const useWalletStore = createWithSignal<WalletStoreType>()(immer((set, ge
                     state.wallet_address = wallet_address,
                         state.balances = balances
                 })
-                console.log(balances)
+
             }
             setStatus("success")
         } catch (error) {

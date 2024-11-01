@@ -1,4 +1,4 @@
-import { createEffect, Show } from "solid-js"
+import { createEffect, createSignal, Show } from "solid-js"
 import { useUserStore } from "../../zustand/user_store/UserStore"
 import './StartButton.css'
 import { useQuestionsStore } from "../../zustand/questions_store/QuestionsStore"
@@ -13,18 +13,22 @@ export const QustionsRanks = () => {
     const updateCoins = useUserStore((state) => state.updateCoins)
     const questions = useQuestionsStore(state => state.Questions)
 
+    const [buttonState, setButtonState] = createSignal(false)
+
     const StartPresent = () => {
+        setButtonState(true)
         if (user().TTFEarnedUserCoins === 0 && user().userId) {
             const coins_data = {
                 coins: 200,
                 userId: user().userId!
             }
             updateCoins(coins_data)
+
         }
     }
 
 
-    // добавить анимацию какуб нибудь 
+
 
     BackButton.hide();
     return (
@@ -44,8 +48,8 @@ export const QustionsRanks = () => {
                         <br /> - Четкую торговую стратегию
                         <br /> <br /> Если ты хочешь пройти обучение и начать торговать с нами в профит, то ждми <b>START</b>
                     </span> </div>
-                <button class="start_button">
-                    <span class='span_button' onClick={StartPresent}>START</span>
+                <button class="start_button" disabled={buttonState()}>
+                    <span class='span_button' onClick={StartPresent}>{buttonState() ? "WAIT" : "START"}</span>
                 </button>
             </div>
         }>

@@ -5,6 +5,7 @@ import WebApp from '@twa-dev/sdk'
 import { MainScreen } from './pages/main_screen/MainScreen';
 import { QustionsRanks } from './components/questions/Questions';
 import { Wallet } from './components/wallet/Wallet';
+import { Friends } from './components/friends/friends';
 
 
 
@@ -21,6 +22,7 @@ const App: Component = () => {
       <Router root={MainScreen} >
         <Route path="/" component={QustionsRanks} />
         <Route path="/wallet" component={Wallet} />
+        <Route path="/friends" component={Friends} />
         <Route path="*" component={NotFounded} />
       </Router>
 
