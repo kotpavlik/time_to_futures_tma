@@ -75,21 +75,7 @@ export const UserInfo = () => {
     const incrementPointsGradually = (user_coins: UserCoinsType) => {
 
         const userPoints = user_coins.user_earrned_coins + user_coins.user_spent_coins;
-        console.log(userPoints)
-        console.log(displayedPoints())
         setDisplayedPoints(userPoints)
-        // const interval = setInterval(() => {
-        //     // Увеличиваем отображаемое количество очков на 10 каждый раз
-        //     setDisplayedPoints((prev) => {
-        //         const userPoints = user_coins.user_earrned_coins + user_coins.user_spent_coins;
-        //         if (prev >= userPoints) {
-        //             clearInterval(interval);
-        //             return prev; // Остановить инкремент, когда достигнуты реальные очки
-        //         }
-        //         return prev + 1; // Увеличение на 10 за каждый шаг
-        //     });
-        // }, 5);
-        // onCleanup(() => clearInterval(interval));
     };
 
 

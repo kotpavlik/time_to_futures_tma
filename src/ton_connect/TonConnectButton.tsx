@@ -13,7 +13,7 @@ export const TonConnectButton: Component = () => {
     onMount(() => {
         setUIOptions({
             buttonRootId,
-            actionsConfiguration: { twaReturnUrl: "https://google.com", notifications: "all" },
+            actionsConfiguration: { notifications: "all" },
             uiPreferences: {
                 theme: "SYSTEM",
                 colorsSet: {

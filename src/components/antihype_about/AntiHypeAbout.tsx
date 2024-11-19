@@ -1,4 +1,4 @@
-import { Component, createSignal } from 'solid-js';
+import { useBackButton, useHapticFeedback } from "@telegram-apps/sdk-solid";
 import { CoinsDataType, useUserStore } from '../../zustand/user_store/UserStore';
 import './AntiHypeAboutButton.css';
 import { useQuestionsStore } from '../../zustand/questions_store/QuestionsStore';
@@ -10,6 +10,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
     const user_id = useUserStore(state => state.user.userId)
     const questions_data = useQuestionsStore(state => state.Questions)
     const setVerified = useQuestionsStore(state => state.setVerified)
+    const haptic_feedback = useHapticFeedback();
 
 
 
@@ -23,7 +24,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
             }
 
             const AboutAntiHype = questions_data().filter(question => question.question === 'AntiHypeAboutbout')
-
+            haptic_feedback().impactOccurred("heavy")
             onClose()
             uppdateCoins(earn_coins)
             setVerified({ id: AboutAntiHype[0]._id, update_data: { verified: true } })
