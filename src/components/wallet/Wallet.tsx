@@ -18,13 +18,12 @@ export const Wallet = () => {
 
 
     const BackButton = useBackButton();
-    const context = useTonConnectUI()
+    const [context,] = useTonConnectUI()
     const navigate = useNavigate();
     const setTokens = useWalletStore((state) => state.setTokens)
     const myTokens = useWalletStore((state) => state.jettons)
     const allTokensBalance = useWalletStore((state) => state.all_tokens_balance)
     const status = useAppStore(state => state.status)
-    const setStatus = useAppStore(state => state.setStatus)
 
 
 
@@ -36,12 +35,15 @@ export const Wallet = () => {
     });
 
 
-    if (!!context[0]().account!.address) {
-        const address = context[0]().account!.address
 
-        address ? setTokens(address) : setStatus("failed")
-    }
-
+    context().onStatusChange((wallet) => {
+        if (wallet !== null) {
+            const address = wallet.account.address
+            setTokens(address)
+        } else {
+            setTokens(null)
+        }
+    })
 
 
     return (
@@ -101,10 +103,10 @@ export const Wallet = () => {
 
 
                 <div class="w-screen h-[60px] flex justify-center">
-                    <button onClick={() => alert('скоро')}
-                        class={`go_next_button text-white select-none w-auto mt-4 text-2xl bg-[#ff2b9c] transition-all rounded-sm p-2 uppercase`}>
+                    <button onClick={() => alert('скоро')} disabled={!context().account}
+                        class={`go_next_button text-white select-none w-auto mt-4 text-2xl  ${!context().account ? 'bg-[#888888]' : 'bg-[#ff2b9c]'} transition-all rounded-sm p-2 uppercase`}>
                         <span class='bg-gray-900/60 p-1  rounded-sm active:bg-gray-900/80  transition'>
-                            задонатить </span></button>
+                            {!context().account ? "пусто" : "задонатить"} </span></button>
                 </div>
             </div>
         </Show>

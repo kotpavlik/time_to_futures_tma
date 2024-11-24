@@ -29,7 +29,7 @@ type JettonType = {
 type WalletType = {
     jettons: JettonType[]
     all_tokens_balance: number,
-    setTokens: (wallet_address: string) => void
+    setTokens: (wallet_address: string | null) => void
 }
 
 
@@ -44,7 +44,7 @@ export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) =>
 
         try {
             setStatus("loading")
-            if (!!wallet_address) {
+            if (!!wallet_address && wallet_address !== null) {
                 const address = Address.parse(wallet_address)
                 const jettons = await ta.accounts.getAccountJettonsBalances(address)
                 const jettonAddresses = jettons.balances.filter(j => j.jetton.verification !== "none").map(j => j.jetton.address.toString());
@@ -78,15 +78,13 @@ export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) =>
                             symbol: j.jetton.symbol,
                             displayName: j.jetton.name
                         }))
-                    console.log(not_verification_jettons)
                     if (not_verification_jettons && not_verification_jettons.length > 0) {
                         set(state => { state.jettons = [...state.jettons, ...not_verification_jettons] })
-                        console.log(get().jettons)
                     }
                 }
 
             } else {
-                return
+                set(state => { state.jettons = [], state.all_tokens_balance = 0 })
             }
             setStatus("success")
         } catch (error) {
