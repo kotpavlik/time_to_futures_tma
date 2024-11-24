@@ -34,6 +34,13 @@ export const Wallet = () => {
         }, true)
     });
 
+    createEffect(() => {
+        if (context().account !== null) {
+            const address = context().account!.address
+            setTokens(address)
+        }
+    })
+
 
 
     context().onStatusChange((wallet) => {
