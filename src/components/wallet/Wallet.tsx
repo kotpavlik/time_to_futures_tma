@@ -24,6 +24,7 @@ export const Wallet = () => {
     const myTokens = useWalletStore((state) => state.jettons)
     const allTokensBalance = useWalletStore((state) => state.all_tokens_balance)
     const status = useAppStore(state => state.status)
+    const setStatus = useAppStore(state => state.setStatus)
 
 
 
@@ -37,7 +38,8 @@ export const Wallet = () => {
 
     if (!!context[0]().account!.address) {
         const address = context[0]().account!.address
-        setTokens(address)
+
+        address ? setTokens(address) : setStatus("failed")
     }
 
 
@@ -51,36 +53,58 @@ export const Wallet = () => {
                         autoplay
                         loop
                         controls
-                        src='https://kotpavlik.github.io/time_to_futures_tma/loading_lottie.json'
+                        src='https://kotpavlik.github.io/time_to_futures_tma/loading_wallet.json'
                         style={{ height: '50vh', width: '50vw', position: "relative" }}
                         buttons={[Buttons.Play, Buttons.Repeat, Buttons.Frame]}
                         theme={Theme.Transparent}
                     />
                 </div>}>
-            <div class="text-white text-4xl  w-screen flex flex-col items-center ">
-                <div class="py-4 h-[60px]">{allTokensBalance().toFixed(2)} $</div>
-                <div class="overflow-y-scroll h-screen w-full">
+
+            <div class="py-4 max-h-[60px] text-white text-4xl">
+                <span class=" text-[#9c9c9c] font-extrabold">$</span>
+                <span class="font-extrabold text-4xl"> {allTokensBalance().toFixed(2)} </span>
+            </div>
+
+            <div class="text-white text-4xl w-screen h-full flex-col justify-between ">
+                <div class={`overflow-y-scroll w-full`}
+                    style={{ height: "calc(100% - 180px)" }}>
                     <For each={myTokens()}  >
                         {(wallet) => {
                             return (
-                                <div class='w-[80%] m-auto h-[55px] text-white text-center flex flex-row justify-between items-center'>
+                                <div class='w-[80%] m-auto h-[55px] text-white  flex flex-row justify-between items-center '>
                                     <img src={wallet.imageUrl} alt="jetons" class="rounded-full w-10 h-10" />
-                                    <div>{wallet.displayName}</div>
-                                    <div>{wallet.symbol}</div>
-                                    <div>{wallet.balance.toFixed(2)}</div>
-                                    {
-                                        wallet.balance && wallet.dexPriceUsd ?
-                                            <div>
-                                                {wallet.balance * wallet.dexPriceUsd < 0.01
-                                                    ? 0
-                                                    : (wallet.balance * wallet.dexPriceUsd).toFixed(2)}</div>
-                                            : <div></div>
-                                    }
-
+                                    <div class="w-full mx-2">
+                                        <div class="text-base font-extrabold">{wallet.displayName}</div>
+                                        <div>
+                                            <div class="text-sm text-[#9c9c9c]">{wallet.balance.toFixed(2)}
+                                                <span class="text-sm mx-1 text-[#9c9c9c]" >
+                                                    {wallet.symbol}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='w-32 text-right'>
+                                        {
+                                            wallet.balance && wallet.dexPriceUsd ?
+                                                <div class="text-base font-bold ">
+                                                    {wallet.balance * wallet.dexPriceUsd < 0.01
+                                                        ? "< 0.01"
+                                                        : (wallet.balance * wallet.dexPriceUsd).toFixed(2)} $</div>
+                                                : <div></div>
+                                        }
+                                    </div>
                                 </div>
                             )
                         }}
                     </For>
+                </div>
+
+
+                <div class="w-screen h-[60px] flex justify-center">
+                    <button onClick={() => alert('скоро')}
+                        class={`go_next_button text-white select-none w-auto mt-4 text-2xl bg-[#ff2b9c] transition-all rounded-sm p-2 uppercase`}>
+                        <span class='bg-gray-900/60 p-1  rounded-sm active:bg-gray-900/80  transition'>
+                            задонатить </span></button>
                 </div>
             </div>
         </Show>
