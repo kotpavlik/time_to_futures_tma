@@ -1,11 +1,13 @@
 import { useNavigate } from "@solidjs/router"
 import { useBackButton } from '@telegram-apps/sdk-solid';
 
-import { createEffect, For, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { useTonConnectUI } from "../../ton_connect/TonConnectCtx";
 import { useWalletStore } from "../../zustand/wallet_store/WalletStore";
 import { Buttons, Player, Theme } from "lottie-solid";
 import { useAppStore } from "../../zustand/app_store/AppStore";
+import { Modal } from "../../features/modal/modal";
+import { Donation } from "./donation/Donation";
 
 
 
@@ -24,6 +26,11 @@ export const Wallet = () => {
     const myTokens = useWalletStore((state) => state.jettons)
     const allTokensBalance = useWalletStore((state) => state.all_tokens_balance)
     const status = useAppStore(state => state.status)
+
+    const [isModalOpen, setIsModalOpen] = createSignal(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
 
 
@@ -110,12 +117,18 @@ export const Wallet = () => {
 
 
                 <div class="w-screen h-[60px] flex justify-center">
-                    <button onClick={() => alert('скоро')} disabled={!context().account}
+                    <button onClick={openModal} disabled={!context().account}
                         class={`go_next_button text-white select-none w-auto mt-4 text-2xl  ${!context().account ? 'bg-[#888888]' : 'bg-[#ff2b9c]'} transition-all rounded-sm p-2 uppercase`}>
                         <span class='bg-gray-900/60 p-1  rounded-sm active:bg-gray-900/80  transition'>
                             {!context().account ? "пусто" : "задонатить"} </span></button>
                 </div>
             </div>
+            <Show when={isModalOpen()}>
+                <Modal
+                    onClose={closeModal}
+                    modal_name="Donatable"
+                    modal_content={Donation} />
+            </Show>
         </Show>
 
     )

@@ -36,7 +36,7 @@ aside {
 
 
 html { 
-    height: 100dvh; 
+    height: 100dvh!important; 
     overflow: hidden ;
     font-family: Roboto;
 } 
@@ -48,6 +48,7 @@ button,
 textarea {
     font-family: inherit;
     resize: none;
+    
 
 }
 
@@ -65,7 +66,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     border-bottom: 2px solid black !important;
     -webkit-text-fill-color: inherit;
-    -webkit-box-shadow: 0 0 0px 1000px #f5e480 inset;
+    -webkit-box-shadow: 0 0 0px 1000px #00ff00 inset;
     transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -103,6 +104,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+scroll-padding-bottom: 100px;
 }
 
 code {

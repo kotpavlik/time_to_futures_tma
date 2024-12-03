@@ -1,5 +1,9 @@
 import { createContext, useContext } from 'solid-js';
-import type { TonConnectUI, TonConnectUiOptions } from '@tonconnect/ui';
+import type { CHAIN, TonConnectUI, TonConnectUiOptions } from '@tonconnect/ui';
+import { useTonWallet } from './useTonWallet';
+import { Address, Sender, SenderArguments, TonClient } from '@ton/ton';
+
+
 
 export type TonConnectUIContextType = [
     get: () => TonConnectUI,
@@ -9,11 +13,22 @@ export type TonConnectUIContextType = [
 ];
 
 export const TonConnectUIContext = createContext<TonConnectUIContextType>();
+const initialContext = {
+    tonClient: undefined,
+};
 
+type TonClientContextProviderValue = {
+    tonClient: TonClient | undefined
+}
+export const TonClientContext = createContext<TonClientContextProviderValue>(initialContext);
 export function useTonConnectUI(): TonConnectUIContextType {
-    const context = useContext(TonConnectUIContext);
-    if (!context) {
+
+
+    const context_ton = useContext(TonConnectUIContext);
+    if (!context_ton) {
         throw new Error('Unable to get TonConnectUIContext');
     }
-    return context;
+
+
+    return context_ton;
 }

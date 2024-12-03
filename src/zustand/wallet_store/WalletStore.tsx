@@ -4,8 +4,9 @@ import { createWithSignal } from "solid-zustand";
 import { immer } from "zustand/middleware/immer";
 import { useAppStore } from "../app_store/AppStore";
 import { HandleError } from "../../features/handleError";
-import { Address, fromNano } from "@ton/core";
+import { Address, fromNano, SenderArguments } from "@ton/core";
 import { StonApiClient } from "@ston-fi/api";
+import { useTonConnectUI } from "../../ton_connect/TonConnectCtx";
 
 
 const stonfi_client = new StonApiClient();
@@ -14,6 +15,7 @@ const ta = new TonApiClient({
     baseUrl: import.meta.env.VITE_TONAPI,
     apiKey: import.meta.env.VITE_TON_API_KEY
 });
+
 
 
 
@@ -51,7 +53,6 @@ export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) =>
                 const jettonAddressesAndTon = ["EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c", ...jettonAddresses]
 
                 const jettons_assets = await Promise.all(jettonAddressesAndTon.map(addressess => stonfi_client.getWalletAsset({ walletAddress: wallet_address, assetAddress: addressess })))
-
 
                 if (jettons_assets.length !== 0 && !!jettons) {
                     const jettons_array = jettons_assets.map((j) => ({

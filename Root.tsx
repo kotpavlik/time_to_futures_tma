@@ -14,6 +14,7 @@ const Inner: Component = () => {
     return (
         <TonConnectUIProvider
             manifestUrl={new URL('https://kotpavlik.github.io/time_to_futures_tma/tonconnect-manifest.json', window.location.href).toString()}
+
         >
             <SDKProvider acceptCustomStyles={true} debug={debug}>
                 <App />

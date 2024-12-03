@@ -1,6 +1,6 @@
 import { initInitData } from "@telegram-apps/sdk-solid";
 import { TonConnectButton } from "../../ton_connect/TonConnectButton";
-import { UpdateLvLType, useUserStore } from "../../zustand/user_store/UserStore";
+import { useUserStore } from "../../zustand/user_store/UserStore";
 import { createEffect, createSignal, onCleanup } from "solid-js";
 import { debounce } from "../../features/debounce/debounce";
 

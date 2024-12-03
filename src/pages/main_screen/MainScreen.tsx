@@ -1,5 +1,4 @@
 import { createEffect, Show, type Component } from 'solid-js';
-import { useTonConnectUI } from '../../ton_connect/TonConnectCtx';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
 import { UserType } from '../../zustand/user_store/UserStore';
@@ -18,7 +17,6 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
 
 
     const vp = useViewport();
-    const context = useTonConnectUI()
     const initData = initInitData();
 
 

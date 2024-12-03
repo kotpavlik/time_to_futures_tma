@@ -40,7 +40,7 @@ export const Footer = () => {
     const isActive = (path: string) => location.pathname === path;
 
     return (
-        <div class="text-white absolute bottom-0 flex h-24 w-screen justify-around items-center bg-black rounded-t-3xl">
+        <div class="text-white absolute z-10 bottom-0 flex h-24 w-screen justify-around items-center bg-black rounded-t-3xl">
             <div>
                 <svg width={50} height={50} fill="white"
                     onClick={goToFriends}
