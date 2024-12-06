@@ -47,8 +47,6 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
     initialUserData()
 
 
-    alert(JSON.stringify(initData?.startParam))
-
 
     return (
 
