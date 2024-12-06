@@ -18,10 +18,7 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
 
     const vp = useViewport();
     const initData = initInitData();
-
-
-
-
+    console.log(initData)
     const status = useAppStore((state) => state.status)
     const initialized = useAppStore((state) => state.initialized)
     const initializeApp = useAppStore((state) => state.initializeApp)
@@ -37,8 +34,9 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
             const user_data: UserType = {
                 authDate: initData.authDate.toLocaleDateString(),
                 isPremium: initData?.user!.isPremium,
-                my_referal_link: 'test',
+                my_referal_link: `https://t.me/go_futures_bot?startapp=${initData?.user!.id}`,
                 userId: initData.user!.id,
+                my_ref_invite_id: Number(initData.startParam),
                 userName: initData.user?.username,
                 firstName: initData.user?.firstName,
                 lastName: initData.user?.lastName,
@@ -49,6 +47,7 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
     initialUserData()
 
 
+    alert(JSON.stringify(initData?.startParam))
 
 
     return (

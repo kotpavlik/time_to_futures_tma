@@ -18,15 +18,17 @@ export type UserType = {
     LVL?: number
     successQuestion?: number
     my_referal_link: string
+    my_ref_invite_id?: number | null
+    my_referers?: Array<UserType>
     wallet_addres?: string
     authDate: string
-    my_referer?: number | null
 }
 export type UserStateType = {
     user: UserType
     initialUser: (user: UserType) => void
     updateCoins: (coins_data: CoinsDataType) => void
     updateLvL: (lvl_data: UpdateLvLType) => void
+    getReferals: (userId: number) => void
 }
 export type CoinsDataType = {
     coins: number
@@ -34,6 +36,10 @@ export type CoinsDataType = {
 }
 export type UpdateLvLType = {
     lvl: number
+    userId: number
+}
+
+export type GetReferalsType = {
     userId: number
 }
 
@@ -54,7 +60,8 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         userId: null,
         userName: '',
         wallet_addres: '',
-        my_referer: null,
+        my_referers: [],
+        my_ref_invite_id: null
     },
     initialUser: async (user: UserType) => {
         const { setStatus, setError } = useAppStore.getState()
@@ -88,7 +95,6 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
         try {
             setStatus("loading")
             if (lvl.lvl > get().user.LVL!) {
-                console.log(lvl.lvl)
                 const UserRequest = await UserApi.UpdateLvL(lvl)
                 if (UserRequest) {
                     set(state => { state.user = UserRequest.data })
@@ -103,5 +109,20 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
             setStatus("failed")
         }
     },
+
+    getReferals: async (userId: number) => {
+        const { setStatus, setError } = useAppStore.getState()
+        try {
+            if (userId) {
+                const my_referals = await UserApi.GetReferals({ userId })
+                console.log(my_referals)
+            }
+
+        } catch (error) {
+            const err = error as Error | AxiosError
+            HandleError(err)
+            setStatus("failed")
+        }
+    }
 }
 )))

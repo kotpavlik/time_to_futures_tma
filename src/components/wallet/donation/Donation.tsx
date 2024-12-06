@@ -46,17 +46,13 @@ export const Donation = () => {
 
     const sendTransactionHandler = async (event: Event) => {
         event.preventDefault();
-
         try {
-            // Параметр amount_usdt должен быть строкой
             await validationSchema.validate({ donationAmount: donationAmount() });
             alert(donationAmount()); // Успешная валидация
         } catch (err: any) {
             if (err.name === "ValidationError") {
-                // Ошибка валидации
                 setErrors({ donationAmount: err.message });
             } else {
-                // Ошибка транзакции
                 alert("Ошибка при отправке транзакции: " + err.message);
             }
         }
