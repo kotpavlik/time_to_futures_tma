@@ -20,9 +20,7 @@ export const UserApi = {
     },
 
     async GetReferals(userId: GetReferalsType): Promise<AxiosResponse> {
-        console.log(userId)
         const response = await instance.post<number, Promise<AxiosResponse>>('get_referals', userId)
-        console.log(response)
         return response
     }
 
