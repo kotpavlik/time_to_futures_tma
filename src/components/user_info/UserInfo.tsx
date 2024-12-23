@@ -65,7 +65,7 @@ export const UserInfo = () => {
 
     const checkFullNameLenght = (firstName: string | undefined, lastName: string | undefined) => {
         const checkLenght = firstName! + lastName!
-        if (checkLenght.length > 15) {
+        if (checkLenght.length > 19) {
             return false
         }
         return true
@@ -105,7 +105,8 @@ export const UserInfo = () => {
     })
 
 
-
+    console.log(checkFullNameLenght(user().lastName, user().firstName))
+    console.log(user().lastName)
 
     return (
         <div class='text-lg w-full relative border-b-2 border-solid rounded-b-2xl'>

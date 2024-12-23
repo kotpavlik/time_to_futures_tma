@@ -21,12 +21,12 @@ export const Friends = () => {
         }, true)
     });
 
-    createEffect(() => {
-        if (my_data().userId) {
-            getReferals(my_data().userId!)
-        }
 
-    })
+    if (my_data().userId) {
+        getReferals(my_data().userId!)
+    }
+
+
 
 
 
@@ -47,15 +47,20 @@ export const Friends = () => {
                     />
                 </div>}>
 
-            <For each={myReferals()!}>
-                {(my_ref) => {
-                    return (
-                        <div>
-                            {my_ref.userName}
-                        </div>
-                    )
-                }}
-            </For>
+            <div class="text-white  w-screen h-full flex-col justify-between ">
+                <div class='text-4xl m-2'>Приглащай качественных друзей и давай торговать вместе!</div>
+                <For each={myReferals()!}>
+                    {(my_ref) => {
+                        return (
+                            <div>
+                                {my_ref.userName}
+                            </div>
+                        )
+                    }}
+                </For>
+            </div>
+
+
 
         </Show>
     )
