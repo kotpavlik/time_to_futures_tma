@@ -50,7 +50,7 @@ export const useTonConnect = () => {
         sender,
         connected,
         walletAddress,
-        network: network(),
+        network,
         tonConnectUI,
         tonClient,
     };
