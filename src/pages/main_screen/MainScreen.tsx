@@ -5,7 +5,7 @@ import { UserType } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
 import { Footer } from '../../components/footer/Footer';
 import { RouteSectionProps } from '@solidjs/router';
-import { initInitData, useViewport } from '@telegram-apps/sdk-solid';
+import { initData, viewport } from '@telegram-apps/sdk-solid';
 
 
 
@@ -16,30 +16,29 @@ import { initInitData, useViewport } from '@telegram-apps/sdk-solid';
 export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) => {
 
 
-    const vp = useViewport();
-    const initData = initInitData();
-    console.log(initData)
+
+
     const status = useAppStore((state) => state.status)
     const initialized = useAppStore((state) => state.initialized)
     const initializeApp = useAppStore((state) => state.initializeApp)
 
 
     createEffect(() => {
-        vp()?.expand()
+        viewport?.expand()
 
     }, [])
 
     const initialUserData = async () => {
         if (initData) {
             const user_data: UserType = {
-                authDate: initData.authDate.toLocaleDateString(),
-                isPremium: initData?.user!.isPremium,
-                my_referal_link: `https://t.me/go_futures_bot?startapp=${initData?.user!.id}`,
-                userId: initData.user!.id,
+                authDate: initData.authDate() ? initData.authDate()!.toLocaleDateString() : "nodate",
+                isPremium: initData?.user()!.isPremium,
+                my_referal_link: `https://t.me/go_futures_bot?startapp=${initData?.user()!.id}`,
+                userId: initData.user()!.id,
                 my_ref_invite_id: Number(initData.startParam),
-                userName: initData.user?.username,
-                firstName: initData.user?.firstName,
-                lastName: initData.user?.lastName,
+                userName: initData.user()?.username,
+                firstName: initData.user()?.firstName,
+                lastName: initData.user()?.lastName,
             }
             initializeApp(user_data)
         }

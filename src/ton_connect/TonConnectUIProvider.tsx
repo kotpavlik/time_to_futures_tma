@@ -1,4 +1,4 @@
-import { ActionConfiguration, TonConnectUI, type TonConnectUiOptions } from '@tonconnect/ui';
+import { TonConnectUI, type TonConnectUiOptions } from '@tonconnect/ui';
 import { createMemo, type Component, type ParentProps } from 'solid-js';
 import { TonConnectUIContext } from './TonConnectCtx';
 
@@ -11,15 +11,16 @@ let cached: TonConnectUI | undefined;
 
 export const TonConnectUIProvider: Component<TonConnectUIProviderProps> = (props) => {
     const tonConnectUI = createMemo(() => {
+
         return cached || (cached = new TonConnectUI({
             manifestUrl: props.manifestUrl,
             actionsConfiguration: {
-                twaReturnUrl: 'https://time-to-futures-tma.vercel.app'
+                twaReturnUrl: 'https://t.me/go_futures_bot?startapp/'
             }
 
         }));
     });
-
+    console.log(tonConnectUI())
     return (
         <TonConnectUIContext.Provider
             value={[

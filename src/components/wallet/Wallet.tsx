@@ -1,7 +1,7 @@
 import { useNavigate } from "@solidjs/router"
-import { useBackButton } from '@telegram-apps/sdk-solid';
+import { backButton } from '@telegram-apps/sdk-solid';
 
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createEffect, createSignal, For, onMount, Show } from "solid-js";
 import { useTonConnectUI } from "../../ton_connect/TonConnectCtx";
 import { useWalletStore } from "../../zustand/wallet_store/WalletStore";
 import { Buttons, Player, Theme } from "lottie-solid";
@@ -19,7 +19,6 @@ export const Wallet = () => {
 
 
 
-    const BackButton = useBackButton();
     const [context,] = useTonConnectUI()
     const navigate = useNavigate();
     const setTokens = useWalletStore((state) => state.setTokens)
@@ -35,10 +34,10 @@ export const Wallet = () => {
 
 
     createEffect(() => {
-        BackButton().on('click', () => {
+        backButton.onClick(() => {
             navigate('/')
-            BackButton().hide();
-        }, true)
+            backButton.hide();
+        })
     });
 
     createEffect(() => {

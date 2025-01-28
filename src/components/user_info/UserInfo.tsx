@@ -1,4 +1,4 @@
-import { initInitData } from "@telegram-apps/sdk-solid";
+import { initData } from "@telegram-apps/sdk-solid";
 import { TonConnectButton } from "../../ton_connect/TonConnectButton";
 import { useUserStore } from "../../zustand/user_store/UserStore";
 import { createEffect, createSignal, onCleanup } from "solid-js";
@@ -11,7 +11,6 @@ type UserCoinsType = {
 
 export const UserInfo = () => {
 
-    const initData = initInitData();
     const user = useUserStore((state) => state.user)
     const user_id = useUserStore(state => state.user.userId)
     const updateLvL = useUserStore((state) => state.updateLvL)
@@ -128,7 +127,7 @@ export const UserInfo = () => {
                     py-2
                     group`}>
                     <div class='flex '>
-                        <img src={initData?.user?.photoUrl ? initData?.user?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
+                        <img src={initData?.user()?.photoUrl ? initData?.user()?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
                         <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
                             {user() && user().firstName && user().lastName
                                 ? checkFullNameLenght(user().lastName, user().firstName)

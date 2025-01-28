@@ -1,13 +1,12 @@
-import { useBackButton } from "@telegram-apps/sdk-solid";
+import { backButton } from "@telegram-apps/sdk-solid";
 import { useUserStore } from "../../zustand/user_store/UserStore"
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createEffect, For, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { Buttons, Player, Theme } from "lottie-solid";
 import { useAppStore } from "../../zustand/app_store/AppStore";
 
 export const Friends = () => {
 
-    const BackButton = useBackButton();
     const navigate = useNavigate();
     const my_data = useUserStore((state) => state.user)
     const getReferals = useUserStore((state) => state.getReferals)
@@ -15,10 +14,10 @@ export const Friends = () => {
     const myReferals = useUserStore((state) => state.user.my_referers)
 
     createEffect(() => {
-        BackButton().on('click', () => {
+        backButton.onClick(() => {
             navigate('/')
-            BackButton().hide();
-        }, true)
+            backButton.hide();
+        },)
     });
 
 

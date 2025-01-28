@@ -1,7 +1,7 @@
 import { onCleanup, onMount, type Component } from 'solid-js';
 import { useTonConnectUI } from './TonConnectCtx';
 import { THEME } from '@tonconnect/ui';
-import { useWalletStore } from '../zustand/wallet_store/WalletStore';
+
 
 
 

@@ -1,4 +1,4 @@
-import { JettonsBalances, TonApiClient } from "@ton-api/client";
+import { TonApiClient } from "@ton-api/client";
 import { AxiosError } from "axios";
 import { createWithSignal } from "solid-zustand";
 import { immer } from "zustand/middleware/immer";
@@ -6,7 +6,7 @@ import { useAppStore } from "../app_store/AppStore";
 import { HandleError } from "../../features/handleError";
 import { Address, fromNano, SenderArguments } from "@ton/core";
 import { StonApiClient } from "@ston-fi/api";
-import { useTonConnectUI } from "../../ton_connect/TonConnectCtx";
+
 
 
 const stonfi_client = new StonApiClient();

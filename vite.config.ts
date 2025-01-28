@@ -16,19 +16,14 @@ export default defineConfig({
   ],
   server: { https: true },
   optimizeDeps: {
-    exclude: ['react', 'react-dom'],
+    exclude: ['react', 'react-dom', 'chunk-VHQHTRUS.js'],
   },
   build: {
     target: 'esnext',
     outDir: './dist'
   },
-  base: './'
-});
-function svgr(): import("vite").PluginOption {
-  throw new Error('Function not implemented.');
-}
+  base: './',
 
-function solidSvg(): import("vite").PluginOption {
-  throw new Error('Function not implemented.');
-}
+});
+
 

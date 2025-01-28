@@ -1,8 +1,11 @@
-import { useBackButton, useHapticFeedback } from "@telegram-apps/sdk-solid";
+import { hapticFeedback } from "@telegram-apps/sdk-solid";
 import { CoinsDataType, useUserStore } from '../../zustand/user_store/UserStore';
 import './AntiHypeAboutButton.css';
 import { useQuestionsStore } from '../../zustand/questions_store/QuestionsStore';
-
+import hello from '../../../assets/gifs/rzF.gif'
+import money from '../../../assets/gifs/4BON.gif'
+import sad from '../../../assets/gifs/NHlv.gif'
+import talk from '../../../assets/gifs/59KW.gif'
 
 export const AntiHypeAbout = (onClose: () => void) => {
 
@@ -10,7 +13,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
     const user_id = useUserStore(state => state.user.userId)
     const questions_data = useQuestionsStore(state => state.Questions)
     const setVerified = useQuestionsStore(state => state.setVerified)
-    const haptic_feedback = useHapticFeedback();
+
 
 
 
@@ -24,7 +27,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
             }
 
             const AboutAntiHype = questions_data().filter(question => question.question === 'AntiHypeAboutbout')
-            haptic_feedback().impactOccurred("heavy")
+            hapticFeedback.impactOccurred("heavy")
             onClose()
             uppdateCoins(earn_coins)
             setVerified({ id: AboutAntiHype[0]._id, update_data: { verified: true } })
@@ -56,7 +59,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
             </p>
 
             <p class="text-xs font-bold pt-1 ">
-                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/rzF.gif" alt="hello gif" />
+                <img src={hello} alt="hello gif" />
             </p>
 
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
@@ -72,7 +75,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
                 В 2014 году я пришел работать менеджером в финансовый отдел банковского брокера - обрабатывать заявки от клиентов на открытие счетов. На самом деле это та еще скукота, я чуть не уволился. Однако меня очень интересовал рынок еще с начала 2008 года и кризиса, когда мой школьный учитель смог заработать более 140% за год на падении рынков! Как? <span class="text-[#00ff00] font-bold">Вот и я захотел разобраться</span> 🤓
             </p>
             <p class="text-xs w-full font-bold pt-4 ">
-                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/4BON.gif" alt="hello gif" width={'100%'} />
+                <img src={money} alt="hello gif" width={'100%'} />
             </p>
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
                 Как я видел трейдеров в 2014 году
@@ -93,7 +96,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
                 </ul>
             </div>
             <p class="text-xs font-bold pt-4 ">
-                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/NHlv.gif" alt="hello gif" width={'100%'} />
+                <img src={sad} alt="sad gif" width={'100%'} />
             </p>
             <p class="text-xs font-light pt-1 lowercase text-[#b7b7b7]">
                 вспомнил свой 2016
@@ -154,7 +157,7 @@ export const AntiHypeAbout = (onClose: () => void) => {
             </p>
 
             <p class="text-xs font-bold w-full pt-4 ">
-                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/gifs/59KW.gif" alt="hello gif" width={'100%'} />
+                <img src={talk} alt="hello gif" width={'100%'} />
             </p>
 
             <p class="text-xs font-bold pt-4 text-[#ff2b9c]">

@@ -2,9 +2,12 @@
 import { render } from 'solid-js/web';
 import './index.css';
 import { Root } from '../Root';
+import { backButton, init, initData } from '@telegram-apps/sdk-solid';
 
 
-
+init()
+backButton.mount();
+initData.restore();
 
 
 const root = document.getElementById('root');

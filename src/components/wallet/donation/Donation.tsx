@@ -1,10 +1,14 @@
-import { createSignal, createEffect } from 'solid-js';
+import { createEffect, createSignal } from 'solid-js';
 import * as Yup from 'yup';
-import { useNavigate } from '@solidjs/router';
-import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
 import { useWalletStore } from '../../../zustand/wallet_store/WalletStore';
 import MyInput from '../../forms/MyInput';
-import { useHapticFeedback } from '@telegram-apps/sdk-solid';
+import { hapticFeedback } from '@telegram-apps/sdk-solid';
+import { TxArgsType, useTXStore } from '../../../zustand/tx/TxStore';
+import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
+import { useTonConnect } from '../../../ton_connect/hooks/useTonConnect';
+import { TonClient } from '@ton/ton';
+
+
 
 
 
@@ -12,12 +16,16 @@ import { useHapticFeedback } from '@telegram-apps/sdk-solid';
 export const Donation = () => {
 
 
-    const [context,] = useTonConnectUI();
+
     const jettons = useWalletStore(state => state.jettons)
+    const sendTransaction = useTXStore((state) => state.sendTransaction)
+    const { sender, walletAddress, tonClient, network } = useTonConnect();
     const [donationAmount, setDonationAmount] = createSignal<number>(0); // Сумма доната
     const [errors, setErrors] = createSignal<{ donationAmount?: number }>({}); // Ошибки валидации
     const [choiseDonationToken, setChoiseDonationToken] = createSignal<string>("USD₮")
-    const haptic_feedback = useHapticFeedback()
+
+
+
 
     const validationSchema = Yup.object().shape({
         donationAmount: Yup.string()
@@ -45,10 +53,19 @@ export const Donation = () => {
 
 
     const sendTransactionHandler = async (event: Event) => {
+
         event.preventDefault();
         try {
             await validationSchema.validate({ donationAmount: donationAmount() });
-            alert(donationAmount()); // Успешная валидация
+
+            // if (!tonClient || !walletAddress) return;
+
+            const tx_args: TxArgsType = {
+                amount: donationAmount(),
+
+            }
+            sendTransaction(tx_args)
+
         } catch (err: any) {
             if (err.name === "ValidationError") {
                 setErrors({ donationAmount: err.message });
@@ -61,7 +78,7 @@ export const Donation = () => {
 
 
     const changeDonationToken = (symbol: string) => {
-        haptic_feedback().impactOccurred("heavy")
+        hapticFeedback.impactOccurred("heavy")
         setDonationAmount(0)
         setChoiseDonationToken(symbol)
     }
@@ -80,6 +97,7 @@ export const Donation = () => {
                 </div>
                 <div class='w-full flex text-white justify-between p-4'>
                     {donations_jettons.map((j) => {
+
                         return (
                             <div class='flex flex-col items-center cursor-pointer'>
                                 <img src={j.imageUrl} alt="token symbol"

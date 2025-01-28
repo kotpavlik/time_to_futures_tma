@@ -1,4 +1,5 @@
-import { createEffect, JSX, createSignal, type Component } from 'solid-js';
+import { JSX, type Component } from 'solid-js';
+import close from '../../../assets/icons/close.png'
 import './modal.css';
 
 type ModalType = {
@@ -39,7 +40,7 @@ export const Modal: Component<ModalType> = ({ onClose, modal_name, modal_content
                 </div>
                 <button class="bg-[#00ff00] text-white px-4 py-4 rounded-bl-[15px]  absolute top-0 right-0"
                     onClick={onClose}>
-                    <img width="20" height="20" src="https://img.icons8.com/external-flat-icons-inmotus-design/67/FFFFFF/external-Close-antivirus-flat-icons-inmotus-design.png" alt="external-Close-antivirus-flat-icons-inmotus-design" />
+                    <img width="20" height="20" src={close} alt="external-Close-antivirus-flat-icons-inmotus-design" />
                 </button>
             </div>
         </div>

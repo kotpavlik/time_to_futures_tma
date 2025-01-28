@@ -5,7 +5,7 @@ import WebApp from '@twa-dev/sdk'
 import { MainScreen } from './pages/main_screen/MainScreen';
 import { QustionsRanks } from './components/questions/Questions';
 import { Wallet } from './components/wallet/Wallet';
-import { Friends } from './components/friends/friends';
+import { Friends } from './components/friends/Friends';
 
 
 

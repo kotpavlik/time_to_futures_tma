@@ -2,6 +2,7 @@
 import { createSignal, Show } from "solid-js"
 import { Modal } from "../../../features/modal/modal";
 import { AntiHypeAbout } from "../../antihype_about/AntiHypeAbout";
+import antihype_logo from '../../../../assets/antihyp.png'
 
 
 
@@ -35,7 +36,7 @@ export const QuestionsTheme = () => {
                     group
                     relative`}
                 onclick={openModal}>
-                <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/antihyp.png" alt="bg" class=" object-cover " />
+                <img src={antihype_logo} alt="bg" class=" object-cover " />
                 <div class="absolute top-0 w-full h-full bg-black/[.5] active:bg-black/[.05] duration-500">
                     <div class="absolute bottom-0 p-4 w-full">
                         все о Antihyip Advisor v2.0</div>
