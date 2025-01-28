@@ -27,6 +27,7 @@ export const Donation = () => {
 
 
 
+
     const validationSchema = Yup.object().shape({
         donationAmount: Yup.string()
             .required("Поле обязательно для заполнения.")
