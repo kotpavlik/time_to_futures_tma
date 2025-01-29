@@ -24,6 +24,7 @@ export const Footer = () => {
     }
 
 
+
     const goToFriends = () => {
         hapticFeedback.impactOccurred("heavy")
         navigate("/friends", { replace: true })
