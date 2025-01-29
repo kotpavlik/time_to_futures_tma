@@ -9,6 +9,7 @@ import { Friends } from './components/friends/Friends';
 
 
 
+
 WebApp.ready();
 WebApp.setHeaderColor('#1a1a1a');
 

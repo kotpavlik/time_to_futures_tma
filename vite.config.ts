@@ -19,24 +19,16 @@ export default defineConfig({
     exclude: ['react', 'react-dom', 'chunk-VHQHTRUS.js'],
   },
   build: {
-    chunkSizeWarningLimit: 1000,
     target: 'esnext',
-    outDir: './dist',
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-          if (id.includes('components')) {
-            return 'components';
-          }
-        }
-      }
-    }
+    outDir: './dist'
   },
-  base: './',
-
+  base: './'
 });
+function svgr(): import("vite").PluginOption {
+  throw new Error('Function not implemented.');
+}
 
+function solidSvg(): import("vite").PluginOption {
+  throw new Error('Function not implemented.');
+}
 
