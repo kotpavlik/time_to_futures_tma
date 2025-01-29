@@ -1,5 +1,5 @@
 import { JSX, type Component } from 'solid-js';
-import close from '../../../assets/icons/close.png'
+import close from '/assets/icons/close.png'
 import './modal.css';
 
 type ModalType = {

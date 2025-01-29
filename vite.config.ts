@@ -19,8 +19,21 @@ export default defineConfig({
     exclude: ['react', 'react-dom', 'chunk-VHQHTRUS.js'],
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     target: 'esnext',
-    outDir: './dist'
+    outDir: './dist',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          if (id.includes('components')) {
+            return 'components';
+          }
+        }
+      }
+    }
   },
   base: './',
 

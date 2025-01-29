@@ -6,7 +6,7 @@ import { hapticFeedback } from '@telegram-apps/sdk-solid';
 import { TxArgsType, useTXStore } from '../../../zustand/tx/TxStore';
 import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
 import { useTonConnect } from '../../../ton_connect/hooks/useTonConnect';
-import { TonClient } from '@ton/ton';
+
 
 
 
@@ -26,7 +26,7 @@ export const Donation = () => {
 
 
 
-
+    console.log(tonClient())
 
     const validationSchema = Yup.object().shape({
         donationAmount: Yup.string()
