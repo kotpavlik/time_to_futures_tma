@@ -107,7 +107,7 @@ export const UserInfo = () => {
 
     return (
         <div class='text-lg w-full relative border-b-2 border-solid rounded-b-2xl'>
-            <div class=" text-cente flex justify-between items-center p-4 ">
+            <div class=" text-center flex justify-between items-center p-4 ">
                 <div class={`
                     inline-block
                     border-solid
@@ -127,7 +127,7 @@ export const UserInfo = () => {
                     py-2
                     group`}>
                     <div class='flex '>
-                        <img src={initData?.user()?.photoUrl ? initData?.user()?.photoUrl : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
+                        <img src={initData?.user()?.photo_url ? initData?.user()?.photo_url : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
                         <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
                             {user() && user().firstName && user().lastName
                                 ? checkFullNameLenght(user().lastName, user().firstName)

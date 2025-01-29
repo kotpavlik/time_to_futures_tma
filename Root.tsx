@@ -20,7 +20,7 @@ const Inner: Component = () => {
             manifestUrl={new URL('https://kotpavlik.github.io/time_to_futures_tma/tonconnect-manifest.json', window.location.href).toString()}
 
         >
-            <TonClientProvider>
+            <TonClientProvider  >
                 <App />
             </TonClientProvider>
         </TonConnectUIProvider>

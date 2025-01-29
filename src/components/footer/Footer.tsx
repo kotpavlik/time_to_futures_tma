@@ -7,8 +7,6 @@ import WalletIcon from "./icons/wallet.svg";
 
 
 
-
-
 export const Footer = () => {
 
     const navigate = useNavigate();
