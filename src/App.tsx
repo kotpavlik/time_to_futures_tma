@@ -16,8 +16,6 @@ WebApp.setHeaderColor('#1a1a1a');
 
 const App: Component = () => {
 
-
-
   return (
     <div class='w-screen h-svh relative bg-[#1a1a1a]'>
       <Router root={MainScreen} >
