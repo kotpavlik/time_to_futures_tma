@@ -30,9 +30,8 @@ export const TonConnectButton: Component = () => {
                         text: { primary: "#3c4a49" }
                     },
 
-
                 }
-            },
+            }
         });
     });
 

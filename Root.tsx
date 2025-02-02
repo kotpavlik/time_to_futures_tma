@@ -2,7 +2,6 @@ import { retrieveLaunchParams } from '@telegram-apps/sdk-solid';
 import { ErrorBoundary, type Component, Switch, Match, createEffect } from 'solid-js';
 import { TonConnectUIProvider } from './src/ton_connect/TonConnectUIProvider';
 import App from './src/App';
-import { TonClientProvider } from './src/ton_connect/TonClientContext';
 
 
 
@@ -20,9 +19,7 @@ const Inner: Component = () => {
             manifestUrl={new URL('https://kotpavlik.github.io/time_to_futures_tma/tonconnect-manifest.json', window.location.href).toString()}
 
         >
-            <TonClientProvider  >
-                <App />
-            </TonClientProvider>
+            <App />
         </TonConnectUIProvider>
     );
 };

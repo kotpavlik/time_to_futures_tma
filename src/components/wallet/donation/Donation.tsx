@@ -1,32 +1,32 @@
-import { createEffect, createSignal } from 'solid-js';
+import { createSignal } from 'solid-js';
 import * as Yup from 'yup';
-import { useWalletStore } from '../../../zustand/wallet_store/WalletStore';
+import { JettonType, useWalletStore } from '../../../zustand/wallet_store/WalletStore';
 import MyInput from '../../forms/MyInput';
 import { hapticFeedback } from '@telegram-apps/sdk-solid';
-import { TxArgsType, useTXStore } from '../../../zustand/tx/TxStore';
+import { useUserStore } from '../../../zustand/user_store/UserStore';
 import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
-import { useTonConnect } from '../../../ton_connect/hooks/useTonConnect';
+import { getJettonTransaction } from '../../../features/utils/jetton-transfer';
+import { Address } from '@ton/core';
 
 
 
 
 
 
-
-export const Donation = () => {
+export const Donation = (onClose: () => void) => {
 
 
 
     const jettons = useWalletStore(state => state.jettons)
-    const sendTransaction = useTXStore((state) => state.sendTransaction)
-    const { sender, walletAddress, tonClient, network } = useTonConnect();
     const [donationAmount, setDonationAmount] = createSignal<number>(0); // Сумма доната
     const [errors, setErrors] = createSignal<{ donationAmount?: number }>({}); // Ошибки валидации
-    const [choiseDonationToken, setChoiseDonationToken] = createSignal<string>("USD₮")
+    const [jetton, setJetton] = createSignal<JettonType | undefined>() // Выбраный токен 
+    const [tonConnectUI] = useTonConnectUI();
+    const user = useUserStore((state) => state.user)
 
 
 
-    console.log(tonClient())
+
 
     const validationSchema = Yup.object().shape({
         donationAmount: Yup.string()
@@ -46,7 +46,7 @@ export const Donation = () => {
                 (value) => {
                     if (!value) return false; // Защита от null или undefined
                     const parsed = parseFloat(value);
-                    const parsed_true = jettons().filter(j => j.symbol === choiseDonationToken())
+                    const parsed_true = jettons().filter(j => j.symbol === jetton()?.symbol)
                     return !isNaN(parsed) && parsed <= parsed_true[0].balance;
                 }
             ),
@@ -57,31 +57,40 @@ export const Donation = () => {
 
         event.preventDefault();
         try {
-            await validationSchema.validate({ donationAmount: donationAmount() });
+            const address = Address.parse(tonConnectUI().account!.address)
 
-            // if (!tonClient || !walletAddress) return;
+            if (!address) return;
+            const recipient_address = import.meta.env.VITE_RECIPIENT_ADDRESS
 
-            const tx_args: TxArgsType = {
-                amount: donationAmount(),
+            const transaction = getJettonTransaction(
+                jetton,
+                donationAmount,
+                recipient_address,
+                address
+            );
+            console.log(jetton())
+            console.log(donationAmount())
+            console.log(recipient_address)
 
-            }
-            sendTransaction(tx_args)
+            // const resp_tx = await tonConnectUI().sendTransaction(transaction).catch((e) => setErrors(e.message || "Transaction failed"));
+            // console.log(resp_tx())
+            // onClose()
 
-        } catch (err: any) {
-            if (err.name === "ValidationError") {
-                setErrors({ donationAmount: err.message });
-            } else {
-                alert("Ошибка при отправке транзакции: " + err.message);
-            }
+        } catch (e: unknown) {
+            console.log(e instanceof Error ? e.message : "An unexpected error occurred");
         }
+
     }
 
 
 
     const changeDonationToken = (symbol: string) => {
         hapticFeedback.impactOccurred("heavy")
+        const jetton = jettons().find(jetton => jetton.symbol === symbol)
+        if (jetton) {
+            setJetton(jetton)
+        }
         setDonationAmount(0)
-        setChoiseDonationToken(symbol)
     }
 
 
@@ -104,7 +113,7 @@ export const Donation = () => {
                                 <img src={j.imageUrl} alt="token symbol"
                                     onClick={() => changeDonationToken(j.symbol)}
                                     class={`rounded-full w-14 h-14 mb-4 shadow-lg
-                                 ${choiseDonationToken() === j.symbol && 'shadow-[#00ff00] scale-110 '}`} />
+                                 ${jetton()?.symbol === j.symbol && 'shadow-[#00ff00] scale-110 '}`} />
                                 <div>
                                     <div class="text-sm font-bold">{j.balance.toFixed(2)}
                                         <span class="text-sm mx-1  " >
@@ -130,7 +139,7 @@ export const Donation = () => {
                     value={donationAmount}
                     changeValue={setDonationAmount}
                     id='donationAmount'
-                    label={choiseDonationToken}
+                    label={jetton}
                     name='donationAmount'
                     inputMode="decimal"
                     setError={setErrors}
@@ -143,7 +152,7 @@ export const Donation = () => {
             <button type="submit" class='mt-10 relative text-centr  bg-[#ff2b9c] w-full text-white font-bold overflow-hidden outline-none rounded-lg px-4 py-5 uppercase border-none cursor-pointer select-none'>
                 <span
                     class='relative z-10'>
-                    Отправить  {choiseDonationToken()}
+                    Отправить  {jetton()?.symbol}
                 </span>
 
             </button>

@@ -11,16 +11,14 @@ let cached: TonConnectUI | undefined;
 
 export const TonConnectUIProvider: Component<TonConnectUIProviderProps> = (props) => {
     const tonConnectUI = createMemo(() => {
-
         return cached || (cached = new TonConnectUI({
             manifestUrl: props.manifestUrl,
             actionsConfiguration: {
-                twaReturnUrl: 'https://t.me/go_futures_bot?startapp/'
+                twaReturnUrl: 'https://t.me/go_futures_bot?startapp'
             }
-
         }));
     });
-    console.log(tonConnectUI())
+
     return (
         <TonConnectUIContext.Provider
             value={[

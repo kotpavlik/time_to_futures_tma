@@ -1,10 +1,11 @@
 
 import { Accessor, createSignal, Setter } from 'solid-js';
+import { JettonType } from '../../zustand/wallet_store/WalletStore';
 
 type PropsType = {
     id?: string
     name?: string
-    label: Accessor<string>
+    label: Accessor<JettonType | undefined>
     value: Accessor<number>
     placeholder?: string
     inputMode: "text" | "none" | "tel" | "url" | "email" | "numeric" | "decimal" | "search" | undefined
@@ -100,8 +101,8 @@ const MyInput = ({ label, id, name, value, inputMode, changeValue, setError }: P
                 ${value().toString().length > 7 ? 'text-2xl pt-5 ' : 'text-4xl'} 
                     font-bold border-b-[#ff2b9c] text-[#ff2b9c] z-10 relative bg-transparent  focus:outline-none focus:border-[#00ff00] focus:text-[#00ff00]`}
             />
-            <label class={`absolute right-1 top-[-12px] cursor-text font-bold z-0 transition-all  text-[#00ff00] text-sm `}>введите сумму в {label()}</label>
-            <label class=' absolute  right-1 bottom-2 text-4xl  font-extrabold  text-[#ff2b9c]   focus:text-[#00ff00]'>{label()}</label>
+            <label class={`absolute right-1 top-[-12px] cursor-text font-bold z-0 transition-all  text-[#00ff00] text-sm `}>введите сумму в {label()?.symbol}</label>
+            <label class=' absolute  right-1 bottom-2 text-4xl  font-extrabold  text-[#ff2b9c]   focus:text-[#00ff00]'>{label()?.symbol}</label>
 
         </div>
 

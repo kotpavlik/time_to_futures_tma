@@ -1,4 +1,4 @@
-import { TonApiClient } from "@ton-api/client";
+import { JettonsBalances, TonApiClient } from "@ton-api/client";
 import { AxiosError } from "axios";
 import { createWithSignal } from "solid-zustand";
 import { immer } from "zustand/middleware/immer";
@@ -19,18 +19,23 @@ const ta = new TonApiClient({
 
 
 
-type JettonType = {
-    balance: number,
-    dexPriceUsd?: number,
-    imageUrl?: string,
-    displayName?: string,
-    totalPrice?: number,
+export type JettonType = {
+    balance: number
+    dexPriceUsd?: number
+    imageUrl?: string
+    displayName?: string
+    totalPrice?: number
     symbol: string
+    decimals?: number
+    contractAddress?: string
+    wallet_address?: string | undefined;
 }
 
 type WalletType = {
     jettons: JettonType[]
-    all_tokens_balance: number,
+    wallet_address: string
+    all_tokens_balance: number
+
     setTokens: (wallet_address: string | null) => void
 }
 
@@ -39,21 +44,21 @@ type WalletType = {
 
 export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) => ({
     jettons: [],
+    wallet_address: '',
     all_tokens_balance: 0,
+    balances: null,
     setTokens: async (wallet_address) => {
         const { setStatus, setError } = useAppStore.getState()
-
-
         try {
             setStatus("loading")
             if (!!wallet_address && wallet_address !== null) {
+                set(state => { state.wallet_address = wallet_address })
                 const address = Address.parse(wallet_address)
                 const jettons = await ta.accounts.getAccountJettonsBalances(address)
                 const jettonAddresses = jettons.balances.filter(j => j.jetton.verification !== "none").map(j => j.jetton.address.toString());
+
                 const jettonAddressesAndTon = ["EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c", ...jettonAddresses]
-
                 const jettons_assets = await Promise.all(jettonAddressesAndTon.map(addressess => stonfi_client.getWalletAsset({ walletAddress: wallet_address, assetAddress: addressess })))
-
                 if (jettons_assets.length !== 0 && !!jettons) {
                     const jettons_array = jettons_assets.map((j) => ({
                         balance: isNaN(Number(j.balance)) ? 0 : Number(j.balance) / 1000000000,
@@ -61,9 +66,12 @@ export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) =>
                         imageUrl: j.imageUrl,
                         totalPrice: isNaN(Number(j.balance)) ? 0 : Number(j.balance) / 1000000000 * Number(j.dexPriceUsd),
                         symbol: j.symbol,
-                        displayName: j.displayName
+                        displayName: j.displayName,
+                        decimals: j.decimals,
+                        contractAddress: j.contractAddress,
+                        wallet_address: j.walletAddress
                     }));
-
+                    console.log(jettons_assets)
                     const totalValueUsd = jettons_array.reduce((sum, j) => {
                         const product = j.balance * j.dexPriceUsd;
                         return sum + product;
@@ -77,7 +85,8 @@ export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) =>
                             balance: Number(fromNano(j.balance)),
                             imageUrl: j.jetton.image,
                             symbol: j.jetton.symbol,
-                            displayName: j.jetton.name
+                            displayName: j.jetton.name,
+
                         }))
                     if (not_verification_jettons && not_verification_jettons.length > 0) {
                         set(state => { state.jettons = [...state.jettons, ...not_verification_jettons] })
