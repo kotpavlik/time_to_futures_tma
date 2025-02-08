@@ -11,7 +11,7 @@ type PropsType = {
     inputMode: "text" | "none" | "tel" | "url" | "email" | "numeric" | "decimal" | "search" | undefined
     changeValue: Setter<number>
     setError: Setter<{
-        donationAmount?: number;
+        donationAmount?: string;
     }>
 }
 

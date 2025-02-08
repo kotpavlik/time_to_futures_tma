@@ -24,16 +24,11 @@ export const QuestionsTheme = () => {
                     border-[#121214]
                     text-white
                     select-none
-                    shadow
-                    active:shadow-lg
-                    duration-500
-                    shadow-[#00ff00]
-                    active:shadow-[#00ff00]
                     bg-[#121214]
                     h-[180px]
                     overflow-hidden
-                    group
-                    relative`}
+                    relative 
+                    box_shadow`}
                 onclick={openModal}>
                 <img src="https://kotpavlik.github.io/time_to_futures_tma/assets/antihyp.png" alt="bg" class=" object-cover " />
                 <div class="absolute top-0 w-full h-full bg-black/[.5] active:bg-black/[.05] duration-500">
@@ -49,15 +44,10 @@ export const QuestionsTheme = () => {
                     border-[#121214]
                     text-white
                     select-none
-                    shadow
-                    active:shadow-lg
-                    duration-500
-                    shadow-[#00ff00]
-                    active:shadow-[#00ff00]
                     bg-[#121214]
                     h-[180px]
                     p-2
-                    group`}
+                    box_shadow`}
             >Психология рынка</div>
             <div class={`
                     border-solid
@@ -66,15 +56,10 @@ export const QuestionsTheme = () => {
                     border-[#121214]
                     text-white
                     select-none
-                    shadow
-                    active:shadow-lg
-                    duration-500
-                    shadow-[#00ff00]
-                    active:shadow-[#00ff00]
                     bg-[#121214]
                     h-[180px]
                     p-2
-                    group`}>Теория</div>
+                    box_shadow`}>Теория</div>
             <div class={`
                     border-solid
                     border-[0.5px]
@@ -82,15 +67,10 @@ export const QuestionsTheme = () => {
                     border-[#121214]
                     text-white
                     select-none
-                    shadow
-                    active:shadow-lg
-                    duration-500
-                    shadow-[#00ff00]
-                    active:shadow-[#00ff00]
                     bg-[#121214]
                     h-[180px]
                     p-2
-                    group`}>Стратегия</div>
+                    box_shadow`}>Стратегия</div>
 
             <Show when={isModalOpen()}>
                 <Modal

@@ -1,12 +1,17 @@
-import { createSignal } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 import * as Yup from 'yup';
 import { JettonType, useWalletStore } from '../../../zustand/wallet_store/WalletStore';
 import MyInput from '../../forms/MyInput';
 import { hapticFeedback } from '@telegram-apps/sdk-solid';
-import { useUserStore } from '../../../zustand/user_store/UserStore';
 import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
 import { getJettonTransaction } from '../../../features/utils/jetton-transfer';
-import { Address } from '@ton/core';
+import { Address, fromNano, internal, toNano } from '@ton/core';
+import { useTonConnect } from '../../../zustand/tonClient_store/useTonConnect';
+import { JettonWallet } from '../../../features/utils/JettonWallets';
+import { JettonMaster, WalletContractV4 } from '@ton/ton';
+import { TON_MASTER_ADDRESS, USDT_MASTER_ADDRESS } from '../../../constants/constants';
+import { sendDataType, useTransferTransactions } from '../../../zustand/transactions_store/TransactionsStore';
+
 
 
 
@@ -18,11 +23,13 @@ export const Donation = (onClose: () => void) => {
 
 
     const jettons = useWalletStore(state => state.jettons)
+    const sendTon = useTransferTransactions(state => state.sendTon)
     const [donationAmount, setDonationAmount] = createSignal<number>(0); // Сумма доната
-    const [errors, setErrors] = createSignal<{ donationAmount?: number }>({}); // Ошибки валидации
-    const [jetton, setJetton] = createSignal<JettonType | undefined>() // Выбраный токен 
+    const [errors, setErrors] = createSignal<{ donationAmount?: string }>({}); // Ошибки валидации
+    const [jetton, setJetton] = createSignal<JettonType | undefined>(undefined) // Выбраный токен 
     const [tonConnectUI] = useTonConnectUI();
-    const user = useUserStore((state) => state.user)
+    const { sender, tonClient, walletAddress, connected } = useTonConnect()
+
 
 
 
@@ -56,28 +63,51 @@ export const Donation = (onClose: () => void) => {
     const sendTransactionHandler = async (event: Event) => {
 
         event.preventDefault();
+        const addressSender = Address.parse(tonConnectUI().account!.address)
         try {
-            const address = Address.parse(tonConnectUI().account!.address)
+            await validationSchema.validate({ donationAmount: donationAmount() }, { abortEarly: false });
+            setErrors({});
 
-            if (!address) return;
-            const recipient_address = import.meta.env.VITE_RECIPIENT_ADDRESS
+            if (addressSender) {
+                if (jetton()?.symbol === 'TON' && !!tonClient) {
 
-            const transaction = getJettonTransaction(
-                jetton,
-                donationAmount,
-                recipient_address,
-                address
-            );
-            console.log(jetton())
-            console.log(donationAmount())
-            console.log(recipient_address)
+                    const senderData: sendDataType = {
+                        addressSender: addressSender,
+                        recipientAddress: import.meta.env.VITE_RECIPIENT_ADDRESS,
+                        amount: toNano(donationAmount()),
+                        tonConnectUI
+                    }
 
-            // const resp_tx = await tonConnectUI().sendTransaction(transaction).catch((e) => setErrors(e.message || "Transaction failed"));
-            // console.log(resp_tx())
-            // onClose()
+                    sendTon(senderData)
+
+                } else {
+
+                    if (!addressSender) return;
+                    const recipient_address = import.meta.env.VITE_RECIPIENT_ADDRESS
+                    const transaction = getJettonTransaction(
+                        jetton,
+                        donationAmount,
+                        recipient_address,
+                        addressSender
+                    );
+                    await tonConnectUI().sendTransaction(transaction).catch((e) => setErrors(e.message || "Transaction failed"));
+                }
+
+
+                onClose()
+            }
+
 
         } catch (e: unknown) {
-            console.log(e instanceof Error ? e.message : "An unexpected error occurred");
+            if (e instanceof Yup.ValidationError) {
+                const newErrors: { donationAmount?: string } = {};
+                e.inner.forEach(err => {
+                    if (err.path) newErrors[err.path as keyof typeof newErrors] = err.message;
+                });
+                setErrors(newErrors);
+            } else {
+                console.error("Ошибка транзакции:", e);
+            }
         }
 
     }
@@ -134,22 +164,34 @@ export const Donation = (onClose: () => void) => {
                     })}
                 </div>
             </div>
-            <div class='overflow-visible z-1 mt-10 relative'>
-                <MyInput
-                    value={donationAmount}
-                    changeValue={setDonationAmount}
-                    id='donationAmount'
-                    label={jetton}
-                    name='donationAmount'
-                    inputMode="decimal"
-                    setError={setErrors}
-                />
+            <Show when={jetton() !== undefined} fallback={
+                <div class="overflow-visible z-1 mt-10 relative' ">
 
-                {errors().donationAmount && (
-                    <span class='text-[#ff2b9c] absolute font-bold bottom-[-20px]'>{errors().donationAmount}</span>
-                )}
-            </div>
-            <button type="submit" class='mt-10 relative text-centr  bg-[#ff2b9c] w-full text-white font-bold overflow-hidden outline-none rounded-lg px-4 py-5 uppercase border-none cursor-pointer select-none'>
+                    <div class=' text-4xl  font-extrabold  text-[#ff2b9c]   focus:text-[#00ff00]'>
+                        ВЫБЕРИ КРИПТУ
+                    </div>
+
+                </div>
+            }>
+                <div class='overflow-visible z-1 mt-10 relative'>
+                    <MyInput
+                        value={donationAmount}
+                        changeValue={setDonationAmount}
+                        id='donationAmount'
+                        label={jetton}
+                        name='donationAmount'
+                        inputMode="decimal"
+                        setError={setErrors}
+                    />
+
+                    {errors().donationAmount && (
+                        <span class='text-[#ff2b9c] absolute font-bold bottom-[-20px]'>{errors().donationAmount}</span>
+                    )}
+                </div>
+            </Show>
+
+            <button type="submit" disabled={jetton() === undefined} class={`mt-10 relative text-centr 
+                ${jetton() === undefined ? 'bg-[#646464]' : 'bg-[#ff2b9c]'}   w-full text-white font-bold overflow-hidden outline-none rounded-lg px-4 py-5 uppercase border-none cursor-pointer select-none`}>
                 <span
                     class='relative z-10'>
                     Отправить  {jetton()?.symbol}
@@ -159,5 +201,6 @@ export const Donation = (onClose: () => void) => {
         </form>
     );
 };
+
 
 

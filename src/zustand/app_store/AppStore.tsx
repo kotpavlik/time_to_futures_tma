@@ -38,7 +38,7 @@ export const useAppStore = createWithSignal<AppStateType>()(immer((set, get) => 
 
             await Promise.all([
                 initialUser(user),
-                initialAllQuestions()
+                initialAllQuestions(),
             ]);
 
             set(state => { state.initialized = true })

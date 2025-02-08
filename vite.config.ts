@@ -11,14 +11,14 @@ export default defineConfig({
     solidPlugin(), basicSsl(), solidSvgPlugin(), nodePolyfills(), tailwindcss(),
   ],
   optimizeDeps: {
-    exclude: ['react', 'react-dom', 'chunk-VHQHTRUS.js'],
+    exclude: ['react', 'react-dom'],
   },
   build: {
     target: 'esnext',
     outDir: './dist'
   },
   server: {
-    https: true,
+
     hmr: {
       protocol: 'wss',
       host: 'time-to-futures.ru.tuna.am',

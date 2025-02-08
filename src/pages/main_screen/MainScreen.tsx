@@ -62,24 +62,6 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
                         buttons={[Buttons.Play, Buttons.Repeat, Buttons.Frame]}
                         theme={Theme.Transparent}
                     />
-                    <div class={`
-                    absolute
-                    top-[100px]
-                    right-[50%]
-                    translate-x-[50%]
-                    inline-block
-                    text-[#00ff00]
-                    select-none
-                    duration-500
-                    text-shadow
-                     w-auto
-                    px-4
-                    py-2
-                    font-bold
-                    text-6xl
-                    group`}>
-                        loading
-                    </div>
                 </div>
             </Show>
 

@@ -3,6 +3,7 @@ import { TonConnectButton } from "../../ton_connect/TonConnectButton";
 import { useUserStore } from "../../zustand/user_store/UserStore";
 import { createEffect, createSignal, onCleanup } from "solid-js";
 import { debounce } from "../../features/debounce/debounce";
+import './User.css'
 
 type UserCoinsType = {
     user_earrned_coins: number
@@ -19,7 +20,6 @@ export const UserInfo = () => {
     const [color, setColor] = createSignal("white")
     const [displayedPoints, setDisplayedPoints] = createSignal(0);
     const [isLVL, setLVL] = createSignal(0);
-
 
 
 
@@ -108,7 +108,7 @@ export const UserInfo = () => {
     return (
         <div class='text-lg w-full relative border-b-2 border-solid rounded-b-2xl'>
             <div class=" text-center flex justify-between items-center p-4 ">
-                <div class={`
+                <div class='
                     inline-block
                     border-solid
                     border-[0.5px]
@@ -116,16 +116,14 @@ export const UserInfo = () => {
                     border-[#121214]
                     text-white
                     select-none
-                    shadow
                     active:shadow-lg
                     duration-500
-                    shadow-[#00ff00]
-                    active:shadow-[#00ff00]
                     bg-[#121214]
                     w-auto
                     px-4
                     py-2
-                    group`}>
+                    box_shadow'
+                >
                     <div class='flex '>
                         <img src={initData?.user()?.photo_url ? initData?.user()?.photo_url : './AI.jpg'} alt="user logo photo" width={30} class={`group-active:scale-110 duration-500 object-contain  rounded-[50%] `} />
                         <div class={`group-active:text-shadow  duration-500 cursor-pointer pl-2 font-bold`}>
@@ -145,30 +143,25 @@ export const UserInfo = () => {
                     border-[#121214]
                     text-white
                     select-none
-                    shadow
                     active:shadow-lg
                     duration-500
-                  shadow-[#00ff00]
-                  active:shadow-[#00ff00]
                    bg-[#121214]
                      w-auto
                     px-4
                     py-2
                     font-bold
-                    group`}>
+                    box_shadow`}>
                     {user().LVL}
                 </div>
                 <div class={`
                     rounded-full
                     border-none
                     select-none
-                    shadow
                     bg-[#00ff00]
                     active:shadow-lg
                     duration-500
-                    shadow-[#00ff00]
-                    active:shadow-[#00ff00]
-                    w-auto group`}>
+                    w-auto
+                    box_shadow `}>
                     <TonConnectButton />
                 </div>
             </div>

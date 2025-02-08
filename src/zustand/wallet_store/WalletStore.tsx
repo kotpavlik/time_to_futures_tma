@@ -71,7 +71,6 @@ export const useWalletStore = createWithSignal<WalletType>()(immer((set, get) =>
                         contractAddress: j.contractAddress,
                         wallet_address: j.walletAddress
                     }));
-                    console.log(jettons_assets)
                     const totalValueUsd = jettons_array.reduce((sum, j) => {
                         const product = j.balance * j.dexPriceUsd;
                         return sum + product;

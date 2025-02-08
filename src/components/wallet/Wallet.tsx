@@ -1,7 +1,7 @@
 import { useNavigate } from "@solidjs/router"
 import { backButton } from '@telegram-apps/sdk-solid';
 
-import { createEffect, createSignal, For, onMount, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { useTonConnectUI } from "../../ton_connect/TonConnectCtx";
 import { useWalletStore } from "../../zustand/wallet_store/WalletStore";
 import { Buttons, Player, Theme } from "lottie-solid";
