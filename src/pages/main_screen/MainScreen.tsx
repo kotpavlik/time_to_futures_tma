@@ -35,7 +35,7 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
                 isPremium: initData?.user()!.is_premium,
                 my_referal_link: `https://t.me/go_futures_bot?startapp=${initData?.user()!.id}`,
                 userId: initData.user()!.id,
-                my_ref_invite_id: Number(initData.startParam),
+                my_ref_invite_id: Number(initData.startParam()),
                 userName: initData.user()?.username,
                 firstName: initData.user()?.first_name,
                 lastName: initData.user()?.last_name,
