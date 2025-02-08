@@ -57,7 +57,7 @@
   transition: 0.5s;
 }
 
-.start_button:hover .span_button {
+.start_button .span_button {
   color: rgba(255, 255, 255, 1);
 }
 

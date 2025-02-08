@@ -31,7 +31,7 @@ export const QustionsRanks = () => {
 
     BackButton.hide();
     return (
-        <Show when={user().TTFEarnedUserCoins !== 0} fallback={
+        <Show when={user().TTFEarnedUserCoins !== 200} fallback={
             <div class="h-full w-screen flex flex-col justify-center pb-[96px] items-center ">
                 <span class='block text-[#00ff00] text-xl uppercase font-bold text-center '>
                     Привет, {user().firstName} !
