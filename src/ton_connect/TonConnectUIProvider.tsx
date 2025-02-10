@@ -14,7 +14,7 @@ export const TonConnectUIProvider: Component<TonConnectUIProviderProps> = (props
         return cached || (cached = new TonConnectUI({
             manifestUrl: props.manifestUrl,
             actionsConfiguration: {
-                twaReturnUrl: 'https://t.me/go_futures_bot?startapp'
+                returnStrategy: 'back'
             }
         }));
     });

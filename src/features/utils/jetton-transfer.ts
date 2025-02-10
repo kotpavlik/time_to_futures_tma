@@ -28,7 +28,6 @@ export const getJettonTransaction = (
     }
 
     const recipient = Address.parse(recipientAddressStr);
-
     const body = beginCell()
         .storeUint(0xf8a7ea5, 32) // operation type (jetton transfer)
         .storeUint(0, 64) // query ID
@@ -40,16 +39,31 @@ export const getJettonTransaction = (
         .storeUint(0, 1) // custom payload (empty)
         .endCell();
 
-    return {
-        validUntil: Math.floor(Date.now() / 1000) + 360, // transaction valid for 6 minutes
-        messages: [
-            {
-                address: jetton()!.wallet_address!, // sender's jetton wallet
-                amount: toNano("0.05").toString(), // estimated fee in nanoton
-                payload: body.toBoc().toString("base64"), // encoded payload for the transfer
-            },
-        ],
-    };
+
+    if (jetton()?.symbol === 'TON') {
+        return {
+            validUntil: Math.floor(Date.now() / 1000) + 360, // transaction valid for 6 minutes
+            messages: [
+                {
+                    address: recipient.toString(), // sender's jetton wallet
+                    amount: amount.toString(), // estimated fee in nanoton
+
+                },
+            ],
+        };
+
+    } else {
+        return {
+            validUntil: Math.floor(Date.now() / 1000) + 360, // transaction valid for 6 minutes
+            messages: [
+                {
+                    address: jetton()!.wallet_address!, // sender's jetton wallet
+                    amount: toNano("0.05").toString(), // estimated fee in nanoton
+                    payload: body.toBoc().toString("base64"), // encoded payload for the transfer
+                },
+            ],
+        };
+    }
 }
 
 

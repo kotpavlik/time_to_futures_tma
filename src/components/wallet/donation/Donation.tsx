@@ -5,12 +5,9 @@ import MyInput from '../../forms/MyInput';
 import { hapticFeedback } from '@telegram-apps/sdk-solid';
 import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
 import { getJettonTransaction } from '../../../features/utils/jetton-transfer';
-import { Address, fromNano, internal, toNano } from '@ton/core';
+import { Address } from '@ton/core';
 import { useTonConnect } from '../../../zustand/tonClient_store/useTonConnect';
-import { JettonWallet } from '../../../features/utils/JettonWallets';
-import { JettonMaster, WalletContractV4 } from '@ton/ton';
-import { TON_MASTER_ADDRESS, USDT_MASTER_ADDRESS } from '../../../constants/constants';
-import { sendDataType, useTransferTransactions } from '../../../zustand/transactions_store/TransactionsStore';
+
 
 
 
@@ -23,7 +20,6 @@ export const Donation = (onClose: () => void) => {
 
 
     const jettons = useWalletStore(state => state.jettons)
-    const sendTon = useTransferTransactions(state => state.sendTon)
     const [donationAmount, setDonationAmount] = createSignal<number>(0); // Сумма доната
     const [errors, setErrors] = createSignal<{ donationAmount?: string }>({}); // Ошибки валидации
     const [jetton, setJetton] = createSignal<JettonType | undefined>(undefined) // Выбраный токен 
@@ -64,35 +60,20 @@ export const Donation = (onClose: () => void) => {
 
         event.preventDefault();
         const addressSender = Address.parse(tonConnectUI().account!.address)
+        const recipient_address = import.meta.env.VITE_RECIPIENT_ADDRESS
         try {
             await validationSchema.validate({ donationAmount: donationAmount() }, { abortEarly: false });
             setErrors({});
 
             if (addressSender) {
-                if (jetton()?.symbol === 'TON' && !!tonClient) {
 
-                    const senderData: sendDataType = {
-                        addressSender: addressSender,
-                        recipientAddress: import.meta.env.VITE_RECIPIENT_ADDRESS,
-                        amount: toNano(donationAmount()),
-                        tonConnectUI
-                    }
-
-                    sendTon(senderData)
-
-                } else {
-
-                    if (!addressSender) return;
-                    const recipient_address = import.meta.env.VITE_RECIPIENT_ADDRESS
-                    const transaction = getJettonTransaction(
-                        jetton,
-                        donationAmount,
-                        recipient_address,
-                        addressSender
-                    );
-                    await tonConnectUI().sendTransaction(transaction).catch((e) => setErrors(e.message || "Transaction failed"));
-                }
-
+                const transaction = getJettonTransaction(
+                    jetton,
+                    donationAmount,
+                    recipient_address,
+                    addressSender
+                );
+                const boc = await tonConnectUI().sendTransaction(transaction).catch((e) => setErrors(e.message || "Transaction failed"))
 
                 onClose()
             }

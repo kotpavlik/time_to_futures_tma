@@ -1,4 +1,4 @@
-import { JettonsBalances, TonApiClient } from "@ton-api/client";
+import { TonApiClient } from "@ton-api/client";
 import { AxiosError } from "axios";
 import { createWithSignal } from "solid-zustand";
 import { immer } from "zustand/middleware/immer";
