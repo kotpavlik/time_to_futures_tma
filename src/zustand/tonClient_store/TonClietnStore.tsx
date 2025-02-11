@@ -18,18 +18,12 @@ export const useTonClientStore = createWithSignal<TonClientState>()(immer((set, 
     client: null,
     consected: false,
     initialize: async (network: string) => {
-
-
         const endpoint = await getHttpEndpoint({
             network: network === CHAIN.MAINNET ? 'mainnet' : 'testnet',
         });
 
         const client = new TonClient({ endpoint });
         set({ client });
-
-
-
-
     },
 
     disconnect: () => {

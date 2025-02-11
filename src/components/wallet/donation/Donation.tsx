@@ -1,4 +1,4 @@
-import { createSignal, Show } from 'solid-js';
+import { createSignal, onCleanup, onMount, Show } from 'solid-js';
 import * as Yup from 'yup';
 import { JettonType, useWalletStore } from '../../../zustand/wallet_store/WalletStore';
 import MyInput from '../../forms/MyInput';
@@ -6,7 +6,8 @@ import { hapticFeedback } from '@telegram-apps/sdk-solid';
 import { useTonConnectUI } from '../../../ton_connect/TonConnectCtx';
 import { getJettonTransaction } from '../../../features/utils/jetton-transfer';
 import { Address } from '@ton/core';
-import { useTonConnect } from '../../../zustand/tonClient_store/useTonConnect';
+import { useTransactions } from '../../../zustand/transactions_store/TransactionStore';
+import './Donation.css'
 
 
 
@@ -21,14 +22,22 @@ export const Donation = (onClose: () => void) => {
 
     const jettons = useWalletStore(state => state.jettons)
     const [donationAmount, setDonationAmount] = createSignal<number>(0); // Сумма доната
+    const sendTransacton = useTransactions(state => state.sendTransactions)
     const [errors, setErrors] = createSignal<{ donationAmount?: string }>({}); // Ошибки валидации
     const [jetton, setJetton] = createSignal<JettonType | undefined>(undefined) // Выбраный токен 
+    const walletStore = useWalletStore();
     const [tonConnectUI] = useTonConnectUI();
-    const { sender, tonClient, walletAddress, connected } = useTonConnect()
 
 
 
+    onMount(() => {
+        walletStore().stopPolling()
+    })
 
+
+    onCleanup(() => {
+        walletStore().startPolling(tonConnectUI().account?.address!);
+    })
 
 
     const validationSchema = Yup.object().shape({
@@ -73,7 +82,7 @@ export const Donation = (onClose: () => void) => {
                     recipient_address,
                     addressSender
                 );
-                const boc = await tonConnectUI().sendTransaction(transaction).catch((e) => setErrors(e.message || "Transaction failed"))
+                sendTransacton(transaction, tonConnectUI)
 
                 onClose()
             }
@@ -124,7 +133,7 @@ export const Donation = (onClose: () => void) => {
                                 <img src={j.imageUrl} alt="token symbol"
                                     onClick={() => changeDonationToken(j.symbol)}
                                     class={`rounded-full w-14 h-14 mb-4 shadow-lg
-                                 ${jetton()?.symbol === j.symbol && 'shadow-[#00ff00] scale-110 '}`} />
+                                 ${jetton()?.symbol === j.symbol && 'jettonShadow scale-110 '}`} />
                                 <div>
                                     <div class="text-sm font-bold">{j.balance.toFixed(2)}
                                         <span class="text-sm mx-1  " >

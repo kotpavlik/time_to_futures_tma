@@ -1,0 +1,7 @@
+.buttSpan {
+    background-color: rgba(18, 18, 18, 0.6);
+}
+
+.buttSpan:hover {
+    background-color: rgba(18, 18, 18, 0.8);
+}
