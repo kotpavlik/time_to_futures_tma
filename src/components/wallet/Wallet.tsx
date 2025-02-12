@@ -25,7 +25,6 @@ export const Wallet = () => {
     const walletStore = useWalletStore();
     const myTokens = useWalletStore((state) => state.jettons)
     const allTokensBalance = useWalletStore((state) => state.all_tokens_balance)
-
     const [filteredJettons, setFiltredJettons] = createSignal<JettonType[]>([]);
     const [isModalOpen, setIsModalOpen] = createSignal(false);
 
@@ -41,13 +40,6 @@ export const Wallet = () => {
         })
     });
 
-    createEffect(() => {
-        if (context().account !== null) {
-            const address = context().account!.address
-            setTokens(address)
-        }
-    })
-
 
 
     context().onStatusChange((wallet) => {
@@ -60,8 +52,22 @@ export const Wallet = () => {
     })
 
 
+
     onMount(() => {
-        walletStore().startPolling(context().account?.address!);
+        if (context().account?.address) {
+            walletStore().startPolling(context().account?.address!);
+        } else {
+            context().onStatusChange((wallet) => {
+                if (wallet !== null) {
+                    const address = wallet.account.address
+                    walletStore().startPolling(address);
+                } else {
+                    setTokens(null)
+                }
+            })
+        }
+
+
     })
 
 

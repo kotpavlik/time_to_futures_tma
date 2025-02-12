@@ -1,11 +1,10 @@
-import { createEffect, Show, type Component } from 'solid-js';
+import { Show, type Component } from 'solid-js';
 import { UserInfo } from '../../components/user_info/UserInfo';
 import { useAppStore } from '../../zustand/app_store/AppStore';
-import { UserType } from '../../zustand/user_store/UserStore';
 import { Buttons, Player, Theme } from 'lottie-solid';
 import { Footer } from '../../components/footer/Footer';
 import { RouteSectionProps } from '@solidjs/router';
-import { initData, viewport } from '@telegram-apps/sdk-solid';
+
 
 
 
@@ -20,30 +19,7 @@ export const MainScreen: Component<RouteSectionProps<unknown>> = ({ children }) 
 
     const status = useAppStore((state) => state.status)
     const initialized = useAppStore((state) => state.initialized)
-    const initializeApp = useAppStore((state) => state.initializeApp)
 
-
-    createEffect(() => {
-        viewport?.expand()
-
-    }, [])
-
-    const initialUserData = async () => {
-        if (initData) {
-            const user_data: UserType = {
-                authDate: initData.authDate() ? initData.authDate()!.toLocaleDateString() : "nodate",
-                isPremium: initData?.user()!.is_premium,
-                my_referal_link: `https://t.me/go_futures_bot?startapp=${initData?.user()!.id}`,
-                userId: initData.user()!.id,
-                my_ref_invite_id: Number(initData.startParam()),
-                userName: initData.user()?.username,
-                firstName: initData.user()?.first_name,
-                lastName: initData.user()?.last_name,
-            }
-            initializeApp(user_data)
-        }
-    }
-    initialUserData()
 
 
 

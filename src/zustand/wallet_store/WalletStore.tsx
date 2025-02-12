@@ -146,6 +146,7 @@ export const useWalletStore = createWithSignal<WalletType>()(
             }
             // Устанавливаем новый интервал с фиксированным значением 5 секунд
             const intervalId = setInterval(() => {
+
                 get().setTokens(wallet_address);
             }, 5000); // 5000 мс = 5 секунд
             set((state) => {
@@ -154,6 +155,7 @@ export const useWalletStore = createWithSignal<WalletType>()(
         },
 
         stopPolling: () => {
+
             const intervalId = get().pollingInterval;
             if (intervalId !== undefined) {
                 clearInterval(intervalId); // Теперь intervalId гарантированно number

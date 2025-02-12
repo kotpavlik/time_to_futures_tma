@@ -4,11 +4,12 @@ import { createEffect, For, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { Buttons, Player, Theme } from "lottie-solid";
 import { useAppStore } from "../../zustand/app_store/AppStore";
+import { initData } from '@telegram-apps/sdk-solid';
 
 export const Friends = () => {
 
     const navigate = useNavigate();
-    const my_data = useUserStore((state) => state.user)
+    const user_data = useUserStore((state) => state.user)
     const getReferals = useUserStore((state) => state.getReferals)
     const status = useAppStore(state => state.status)
     const myReferals = useUserStore((state) => state.user.my_referers)
@@ -21,9 +22,14 @@ export const Friends = () => {
     });
 
 
-    if (my_data().userId) {
-        getReferals(my_data().userId!)
-    }
+    const user_id = initData.user()?.id
+
+    createEffect(() => {
+        if (!!user_id) {
+            getReferals(user_id)
+        }
+
+    })
 
 
 
@@ -32,7 +38,7 @@ export const Friends = () => {
 
 
     return (
-        <Show when={status() === "success"}
+        <Show when={status() === "success" && !!myReferals() && myReferals()!.length > 0}
             fallback={
                 <div class='w-full h-full text-white text-center'>
                     <Player
@@ -48,7 +54,7 @@ export const Friends = () => {
 
             <div class="text-white  w-screen h-full flex-col justify-between ">
                 <div class='text-4xl m-2'>Приглашай качественных друзей и давай торговать вместе!</div>
-                <For each={myReferals()!}>
+                <For each={myReferals()!} >
                     {(my_ref) => {
                         return (
                             <div>
