@@ -29,7 +29,7 @@ export const useTransactions = createWithSignal<TrasactionsType>()(immer((set, g
 
             const err = error as Error | AxiosError
             HandleError(err)
-            setStatus("failed")
+
         }
 
     }

@@ -61,6 +61,17 @@ export const Donation = (onClose: () => void) => {
                     const parsed_true = jettons().filter(j => j.symbol === jetton()?.symbol)
                     return !isNaN(parsed) && parsed <= parsed_true[0].balance;
                 }
+            )
+            .test(
+                "tonGasFee",
+                "Недостаточно TON для оплаты газа (требуется минимум 0.05 TON)",
+                (value) => {
+                    const tonJetton = jettons().find(j => j.symbol === "TON");
+                    if (tonJetton) {
+                        return tonJetton.balance >= 0.05;
+                    }
+                    return false;
+                }
             ),
     });
 
