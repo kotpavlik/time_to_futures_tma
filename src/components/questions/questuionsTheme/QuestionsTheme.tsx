@@ -15,7 +15,7 @@ export const QuestionsTheme = () => {
 
 
     return (
-        <div class="text-center text-white text-xl font-bold h-[600px]  w-screen grid grid-cols-2 gap-2 p-2 pb-[120px] overflow-y-scroll">
+        <div class="text-center text-white text-xl font-bold h-full  w-screen grid grid-cols-2 gap-2 px-2 pb-[260px] pt-4 overflow-y-scroll">
             <div class={`
                     col-span-2
                     border-solid
@@ -48,7 +48,7 @@ export const QuestionsTheme = () => {
                     h-[180px]
                     p-2
                     box_shadow`}
-            >Психология рынка</div>
+            >Психология рынка soon</div>
             <div class={`
                     border-solid
                     border-[0.5px]
@@ -59,7 +59,7 @@ export const QuestionsTheme = () => {
                     bg-[#121214]
                     h-[180px]
                     p-2
-                    box_shadow`}>Теория</div>
+                    box_shadow`}>Теория soon</div>
             <div class={`
                     border-solid
                     border-[0.5px]
@@ -70,7 +70,64 @@ export const QuestionsTheme = () => {
                     bg-[#121214]
                     h-[180px]
                     p-2
-                    box_shadow`}>Стратегия</div>
+                    box_shadow`}>Стратегия soon</div>
+            <div class={`
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    bg-[#121214]
+                    h-[180px]
+                    p-2
+                    box_shadow`}>test soon</div>
+            <div class={`
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    bg-[#121214]
+                    h-[180px]
+                    p-2
+                    box_shadow`}>test soon</div>
+            <div class={`
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    bg-[#121214]
+                    h-[180px]
+                    p-2
+                    box_shadow`}>test soon</div>
+            <div class={`
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    bg-[#121214]
+                    h-[180px]
+                    p-2
+                    box_shadow`}>test soon</div>
+            <div class={`
+                    border-solid
+                    border-[0.5px]
+                    rounded-[15px]
+                    border-[#121214]
+                    text-white
+                    select-none
+                    bg-[#121214]
+                    h-[180px]
+                    p-2
+                    box_shadow`}>test soon</div>
+
+
 
             <Show when={isModalOpen()}>
                 <Modal

@@ -47,7 +47,7 @@ export const Friends = () => {
                 </div>}>
 
             <div class="text-white  w-screen h-full flex-col justify-between ">
-                <div class='text-4xl m-2'>Приглащай качественных друзей и давай торговать вместе!</div>
+                <div class='text-4xl m-2'>Приглашай качественных друзей и давай торговать вместе!</div>
                 <For each={myReferals()!}>
                     {(my_ref) => {
                         return (
