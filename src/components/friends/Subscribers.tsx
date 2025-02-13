@@ -37,9 +37,7 @@ export const Friends = () => {
             setReferalsArr(myReferals())
         }
     })
-    createEffect(() => {
-        console.log("myReferals:", referals_arr());
-    });
+
 
 
 
