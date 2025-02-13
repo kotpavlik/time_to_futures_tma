@@ -39,6 +39,7 @@ const App: Component = () => {
         userId: initData.user()!.id,
         my_ref_invite_id: Number(initData.startParam()),
         userName: initData.user()?.username,
+        my_referers: [],
         firstName: initData.user()?.first_name,
         lastName: initData.user()?.last_name,
       }

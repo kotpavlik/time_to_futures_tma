@@ -19,7 +19,7 @@ export type UserType = {
     successQuestion?: number
     my_referal_link: string
     my_ref_invite_id?: number | null
-    my_referers?: Array<UserType>
+    my_referers: Array<UserType>
     wallet_addres?: string
     authDate: string
 }
@@ -117,11 +117,13 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
             if (userId) {
                 const my_referals = await UserApi.GetReferals({ userId })
 
-                if (my_referals.data) {
-
+                if (my_referals !== undefined && my_referals.data !== undefined) {
                     set(state => { state.user.my_referers = my_referals.data })
-                    setStatus("success")
+
+                } else {
+                    set(state => { state.user.my_referers = [] })
                 }
+                setStatus("success")
             }
 
         } catch (error) {

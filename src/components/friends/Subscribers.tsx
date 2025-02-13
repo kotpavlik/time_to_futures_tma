@@ -1,6 +1,6 @@
 import { backButton } from "@telegram-apps/sdk-solid";
-import { useUserStore } from "../../zustand/user_store/UserStore"
-import { createEffect, For, Show } from "solid-js";
+import { UserType, useUserStore } from "../../zustand/user_store/UserStore"
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { Buttons, Player, Theme } from "lottie-solid";
 import { useAppStore } from "../../zustand/app_store/AppStore";
@@ -11,10 +11,10 @@ import WebApp from "@twa-dev/sdk";
 export const Friends = () => {
 
     const navigate = useNavigate();
-    const user_data = useUserStore((state) => state.user)
     const getReferals = useUserStore((state) => state.getReferals)
     const status = useAppStore(state => state.status)
     const myReferals = useUserStore((state) => state.user.my_referers)
+    const [referals_arr, setReferalsArr] = createSignal<Array<UserType>>([])
 
     createEffect(() => {
         backButton.onClick(() => {
@@ -30,17 +30,21 @@ export const Friends = () => {
         if (!!user_id) {
             getReferals(user_id)
         }
-
     })
 
+    createEffect(() => {
+        if (myReferals()) {
+            setReferalsArr(myReferals())
+        }
+    })
+    createEffect(() => {
+        console.log("myReferals:", referals_arr());
+    });
 
 
-
-    console.log(status())
-    console.log(myReferals())
 
     return (
-        <Show when={status() === "success" && myReferals()}
+        <Show when={status() === "success" && !!referals_arr()}
             fallback={
                 <div class='w-full h-full text-white text-center'>
                     <Player
@@ -69,13 +73,13 @@ export const Friends = () => {
                         </For>
 
                     </div>
-                    <Show when={myReferals()?.length === 0} >
+                    <Show when={referals_arr()?.length === 0} >
                         <div class=" friends_null text-2xl flex flex-col justify-around p-4 items-center h-full w-full   text-[#00ff00] absolute bottom-0 rounded-2xl  font-bold ">
                             <div>
                                 <div class="text-center">
                                     у тебя
                                     <span class='mx-2 text-[#00ff00] font-bold text-center'>
-                                        {myReferals()?.length}
+                                        {referals_arr()?.length}
                                     </span>
                                     корешей 😱
                                 </div>
@@ -84,11 +88,11 @@ export const Friends = () => {
                             <div class='text-4xl mt-4'>👇🏻👇🏻👇🏻</div>
                         </div>
                     </Show>
-                    <Show when={myReferals()?.length === 1} fallback={
+                    <Show when={referals_arr()?.length === 1} fallback={
                         <div class=" friends_sum text-2xl text-end text-[#00ff00] absolute bottom-0 px-2 py-1 rounded-tl-2xl rounded-br-2xl right-0 font-extralight ">
                             у тебя около
                             <span class='mx-2 text-[#00ff00] font-bold'>
-                                {myReferals()?.length}
+                                {referals_arr()?.length}
                             </span>
                             корешей 😎
                         </div>
@@ -96,7 +100,7 @@ export const Friends = () => {
                         <div class=" friends_sum text-2xl text-end text-[#00ff00] absolute bottom-0 px-2 py-1 rounded-tl-2xl rounded-br-2xl right-0 font-extralight ">
                             у тебя только
                             <span class='mx-2 text-[#00ff00] font-bold'>
-                                {myReferals()?.length}
+                                {referals_arr()?.length}
                             </span>
                             кореш 😢
                         </div>
