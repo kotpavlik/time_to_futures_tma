@@ -35,7 +35,7 @@ export const Friends = () => {
 
 
     const inviteFriends = () => {
-        WebApp.requestWriteAccess()
+
     }
 
 
