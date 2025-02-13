@@ -62,7 +62,7 @@ export const Friends = () => {
                 <div class='text-2xl text-center my-2 mx-4 text-[#ff2b9c] font-black'>Приглашай только лучших друзей и давай торговать вместе!  💚📈</div>
                 <div class="relative m-4 ">
                     <div class='shadow text-white text-xl flex flex-col h-[250px] relative   px-2  pt-4 pb-10 overflow-y-scroll border border-[#00ff00] rounded-2xl '>
-                        <For each={myReferals()!} >
+                        <For each={referals_arr()} >
                             {(my_ref) => {
                                 return (
                                     <div class='mx-10 my-[1px] text-[#00ff00] font-extralight'>
