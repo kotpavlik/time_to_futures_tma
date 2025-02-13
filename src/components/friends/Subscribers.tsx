@@ -34,15 +34,13 @@ export const Friends = () => {
     })
 
 
-    const inviteFriends = () => {
-
-    }
 
 
-
+    console.log(status())
+    console.log(myReferals())
 
     return (
-        <Show when={status() === "success" && !!myReferals() && myReferals()!.length > 0}
+        <Show when={status() === "success" && myReferals()}
             fallback={
                 <div class='w-full h-full text-white text-center'>
                     <Player
@@ -104,9 +102,7 @@ export const Friends = () => {
                         </div>
                     </Show>
                 </div>
-                <div onClick={() => inviteFriends()}>
-                    отправить
-                </div>
+
             </div>
 
 

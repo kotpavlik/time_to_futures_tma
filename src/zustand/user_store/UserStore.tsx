@@ -116,7 +116,9 @@ export const useUserStore = createWithSignal<UserStateType>()(immer((set, get) =
             setStatus("loading")
             if (userId) {
                 const my_referals = await UserApi.GetReferals({ userId })
+
                 if (my_referals.data) {
+
                     set(state => { state.user.my_referers = my_referals.data })
                     setStatus("success")
                 }
