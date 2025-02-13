@@ -64,13 +64,21 @@ export const Donation = (onClose: () => void) => {
             )
             .test(
                 "tonGasFee",
-                "Недостаточно TON для оплаты газа (требуется минимум 0.05 TON)",
+                "Не хватает TON для оплаты газа",
                 (value) => {
                     const tonJetton = jettons().find(j => j.symbol === "TON");
-                    if (tonJetton) {
-                        return tonJetton.balance >= 0.05;
+                    if (!tonJetton) return false; // Если TON не найден, проверка не проходит
+
+                    const requiredGas = 0.05; // Минимальный требуемый баланс для газа
+                    const parsedAmount = parseFloat(value || "0");
+
+                    if (jetton()?.symbol === "TON") {
+                        // Если отправляем TON, проверяем, что остаток после отправки >= 0.05 TON
+                        return tonJetton.balance - parsedAmount >= requiredGas;
+                    } else {
+                        // Если отправляем любой другой жетон, проверяем, что баланс TON >= 0.05
+                        return tonJetton.balance >= requiredGas;
                     }
-                    return false;
                 }
             ),
     });
@@ -122,6 +130,7 @@ export const Donation = (onClose: () => void) => {
             setJetton(jetton)
         }
         setDonationAmount(0)
+        setErrors({ donationAmount: '' })
     }
 
 
