@@ -5,6 +5,8 @@ import { useNavigate } from "@solidjs/router";
 import { Buttons, Player, Theme } from "lottie-solid";
 import { useAppStore } from "../../zustand/app_store/AppStore";
 import { initData } from '@telegram-apps/sdk-solid';
+import './Subscribers.css';
+import WebApp from "@twa-dev/sdk";
 
 export const Friends = () => {
 
@@ -32,7 +34,9 @@ export const Friends = () => {
     })
 
 
-
+    const inviteFriends = () => {
+        WebApp.requestWriteAccess()
+    }
 
 
 
@@ -53,16 +57,56 @@ export const Friends = () => {
                 </div>}>
 
             <div class="text-white  w-screen h-full flex-col justify-between ">
-                <div class='text-4xl m-2'>Приглашай качественных друзей и давай торговать вместе!</div>
-                <For each={myReferals()!} >
-                    {(my_ref) => {
-                        return (
+                <div class='text-2xl text-center my-2 mx-4 text-[#ff2b9c] font-black'>Приглашай только лучших друзей и давай торговать вместе!  💚📈</div>
+                <div class="relative m-4 ">
+                    <div class='shadow text-white text-xl flex flex-col h-[250px] relative   px-2  pt-4 pb-10 overflow-y-scroll border border-[#00ff00] rounded-2xl '>
+                        <For each={myReferals()!} >
+                            {(my_ref) => {
+                                return (
+                                    <div class='mx-10 my-[1px] text-[#00ff00] font-extralight'>
+                                        {my_ref.userName || my_ref.firstName || my_ref.lastName}
+                                    </div>
+                                )
+                            }}
+                        </For>
+
+                    </div>
+                    <Show when={myReferals()?.length === 0} >
+                        <div class=" friends_null text-2xl flex flex-col justify-around p-4 items-center h-full w-full   text-[#00ff00] absolute bottom-0 rounded-2xl  font-bold ">
                             <div>
-                                {my_ref.userName}
+                                <div class="text-center">
+                                    у тебя
+                                    <span class='mx-2 text-[#00ff00] font-bold text-center'>
+                                        {myReferals()?.length}
+                                    </span>
+                                    корешей 😱
+                                </div>
+                                <div class="text-center">Это надо срочно исправлять</div>
                             </div>
-                        )
-                    }}
-                </For>
+                            <div class='text-4xl mt-4'>👇🏻👇🏻👇🏻</div>
+                        </div>
+                    </Show>
+                    <Show when={myReferals()?.length === 1} fallback={
+                        <div class=" friends_sum text-2xl text-end text-[#00ff00] absolute bottom-0 px-2 py-1 rounded-tl-2xl rounded-br-2xl right-0 font-extralight ">
+                            у тебя около
+                            <span class='mx-2 text-[#00ff00] font-bold'>
+                                {myReferals()?.length}
+                            </span>
+                            корешей 😎
+                        </div>
+                    }>
+                        <div class=" friends_sum text-2xl text-end text-[#00ff00] absolute bottom-0 px-2 py-1 rounded-tl-2xl rounded-br-2xl right-0 font-extralight ">
+                            у тебя только
+                            <span class='mx-2 text-[#00ff00] font-bold'>
+                                {myReferals()?.length}
+                            </span>
+                            кореш 😢
+                        </div>
+                    </Show>
+                </div>
+                <div onClick={() => inviteFriends()}>
+                    отправить
+                </div>
             </div>
 
 

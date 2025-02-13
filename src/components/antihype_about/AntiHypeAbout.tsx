@@ -1,6 +1,7 @@
 import { hapticFeedback } from "@telegram-apps/sdk-solid";
 import { CoinsDataType, useUserStore } from '../../zustand/user_store/UserStore';
 import './AntiHypeAboutButton.css';
+import WebApp from '@twa-dev/sdk'
 import { useQuestionsStore } from '../../zustand/questions_store/QuestionsStore';
 
 
@@ -37,7 +38,8 @@ export const AntiHypeAbout = (onClose: () => void) => {
 
 
     const openExternalLink = (url: string) => {
-        window.open(url, '_blank', 'noopener,noreferrer');
+        WebApp.openLink(url, { try_instant_view: true })
+        // window.open(url, '_blank', 'noopener,noreferrer');
     };
 
     return (
