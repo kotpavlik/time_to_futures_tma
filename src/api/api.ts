@@ -10,14 +10,14 @@ export const instance = axios.create({
 
 
 export const client_ton_instance = axios.create({
-    baseURL: import.meta.env.VITE_API_TON_CLIENT,
+    baseURL: import.meta.env.VITE_API_TON_CLIENT_SEE,
     withCredentials: true,
 
 });
 
 client_ton_instance.interceptors.request.use(
     (config) => {
-        const token = import.meta.env.VITE_TON_TOKEN
+        const token = import.meta.env.VITE_TON_API_KEY
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

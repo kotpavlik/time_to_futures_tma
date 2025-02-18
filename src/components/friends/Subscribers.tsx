@@ -5,8 +5,11 @@ import { useNavigate } from "@solidjs/router";
 import { Buttons, Player, Theme } from "lottie-solid";
 import { useAppStore } from "../../zustand/app_store/AppStore";
 import { initData } from '@telegram-apps/sdk-solid';
+import DoneIcon from './icons/done.svg';
+import CopyIcon from './icons/copy.svg';
 import './Subscribers.css';
-import WebApp from "@twa-dev/sdk";
+import WebApp from '@twa-dev/sdk'
+
 
 export const Friends = () => {
 
@@ -14,7 +17,9 @@ export const Friends = () => {
     const getReferals = useUserStore((state) => state.getReferals)
     const status = useAppStore(state => state.status)
     const myReferals = useUserStore((state) => state.user.my_referers)
+    const user = useUserStore((state) => state.user)
     const [referals_arr, setReferalsArr] = createSignal<Array<UserType>>([])
+    const [copied, setCopied] = createSignal<boolean>(false)
 
     createEffect(() => {
         backButton.onClick(() => {
@@ -38,7 +43,23 @@ export const Friends = () => {
         }
     })
 
+    const shareMess = () => {
+        const message = "Привет!Я нашел крутое комьюнити 🚀Там классные ребята торгуют криптой и обсуждают разные сетапы📈\n\nСоздатель канала очень опытный трейдер и добрый чел👑\n\nВ приложении можно зарабатывать бонусы🏆 Залетай, жду теьбя 👇🏻👇🏻👇🏻";
+        const url = `https://t.me/share/url?url=${encodeURIComponent(user().my_referal_link)}&text=${encodeURIComponent(message)}`;
+        WebApp.openTelegramLink(url);
+    }
 
+    const clipboardHandler = async () => {
+        try {
+            await navigator.clipboard.writeText(user().my_referal_link);
+            setCopied(true)
+            setTimeout(() => {
+                setCopied(false)
+            }, 500);
+        } catch (err) {
+            console.error('Не удалось скопировать ссылку:', err);
+        }
+    };
 
 
     return (
@@ -56,10 +77,10 @@ export const Friends = () => {
                     />
                 </div>}>
 
-            <div class="text-white  w-screen h-full flex-col justify-between ">
-                <div class='text-2xl text-center my-2 mx-4 text-[#ff2b9c] font-black'>Приглашай только лучших друзей и давай торговать вместе!  💚📈</div>
+            <div class="text-white  w-screen h-full flex pb-[100px] flex-col justify-between ">
+                <div class='text-2xl text-center my-2 uppercase mx-4 text-[#ff2b9c] font-black'>Создадим лучшее сообшество вместе 💚</div>
                 <div class="relative m-4 ">
-                    <div class='shadow text-white text-xl flex flex-col h-[250px] relative   px-2  pt-4 pb-10 overflow-y-scroll border border-[#00ff00] rounded-2xl '>
+                    <div class='shadow  text-xl flex flex-col h-[250px] relative   px-2  pt-4 pb-10 overflow-y-scroll rounded-2xl '>
                         <For each={referals_arr()} >
                             {(my_ref) => {
                                 return (
@@ -104,10 +125,20 @@ export const Friends = () => {
                         </div>
                     </Show>
                 </div>
-
+                <div>
+                    <div onClick={() => shareMess()} class='shadow rounded-xl select-none  mx-4 my-2 text-center uppercase text-2xl p-1 text-[#00ff00]'>
+                        Пригласить
+                    </div>
+                    <div onClick={() => clipboardHandler()} class='shadow rounded-xl mx-4 my-2 text-center flex justify-center uppercase text-2xl p-1 text-[#00ff00] select-none  '>
+                        <div>поделиться</div>
+                        <div class="flex justify-center items-center ml-2">
+                            <svg width={25} height={25} >
+                                {copied() ? DoneIcon : CopyIcon}
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
 
         </Show>
     )

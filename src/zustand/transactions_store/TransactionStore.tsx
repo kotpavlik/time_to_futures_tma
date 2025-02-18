@@ -4,7 +4,7 @@ import { immer } from "zustand/middleware/immer";
 import { HandleError } from "../../features/handleError";
 import { useAppStore } from "../app_store/AppStore";
 import { SendTransactionRequest, TonConnectUI } from "@tonconnect/ui";
-import { TonApiClient, Event } from "@ton-api/client";
+import { TonApiClient } from "@ton-api/client";
 
 
 const ta = new TonApiClient({

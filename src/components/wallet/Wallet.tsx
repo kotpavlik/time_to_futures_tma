@@ -5,7 +5,6 @@ import { createEffect, createSignal, For, onCleanup, onMount, Show } from "solid
 import { useTonConnectUI } from "../../ton_connect/TonConnectCtx";
 import { JettonType, useWalletStore } from "../../zustand/wallet_store/WalletStore";
 import { Buttons, Player, Theme } from "lottie-solid";
-import { useAppStore } from "../../zustand/app_store/AppStore";
 import { Modal } from "../../features/modal/modal";
 import { Donation } from "./donation/Donation";
 
